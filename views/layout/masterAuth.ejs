@@ -1,0 +1,137 @@
+<!doctype html>
+<html class="no-js " lang="en">
+<!-- Mirrored from www.wrraptheme.com/templates/compass/html/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:06 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+    <title>App Chat Kỳ Smile</title>
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/authentication.css">
+    <link rel="stylesheet" href="assets/css/color_skins.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function isEmail(email) {
+            return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+        }
+
+        function validateForm() {
+            let name = $('#name').val();
+            let email = $('#email').val();
+            let password = $('#password').val();
+            let confirmPassword = $('#confirmPassword').val();
+            if (name == "") {
+                swal("Bạn chưa nhập Tên", "", "warning").
+                then(function() {
+                    $('#name').focus();
+                });
+                return false;
+            } else if (email == "") {
+                swal("Bạn chưa nhập Email", "", "warning").
+                then(function() {
+                    $('#email').focus();
+                });
+                return false;
+            } else if (password == "") {
+                swal("Bạn chưa nhập mật khẩu", "", "warning").
+                then(function() {
+                    $('#password').focus();
+                });
+                return false;
+            } else if (confirmPassword == "") {
+                swal("Bạn cần nhập lại mật khẩu 1 lần nữa để xác nhận", "", "warning").
+                then(function() {
+                    $('#confirmPassword').focus();
+                });
+                return false;
+            } else if(!isEmail(email)) {
+                swal("Email không hợp lệ !!! ", "", "warning").
+                then(function() {
+                    $('#email').focus();
+                });
+                return false;
+            } else {
+                if(!($('#terms')[0].checked)){
+                    swal("Bạn cần tích chọn đồng ý với các điều khoản trước khi đăng kí tài khoản !!! ", "", "warning").
+                    then(function() {
+                    });
+                    return false;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="theme-cyan authentication sidebar-collapse">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-transparent">
+        <div class="container">
+            <div class="navbar-translate n_logo">
+                <button class="navbar-toggler" type="button">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" title="Follow us on Google" href="#" target="_blank">
+                            <i class="zmdi zmdi-google"></i>
+                            <p class="d-lg-none d-xl-none">Google</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="Like us on Facebook" href="#" target="_blank">
+                            <i class="zmdi zmdi-facebook"></i>
+                            <p class="d-lg-none d-xl-none">Facebook</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="Follow us on Github" href="#" target="_blank">
+                            <i class="zmdi zmdi-github"></i>
+                            <p class="d-lg-none d-xl-none">Github</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-round" href="/sign-up">SIGN UP</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="page-header">
+        <div class="page-header-image" style="background-image:url(assets/images/login.jpg)"></div>
+        <div class="container">
+            <%- content %>
+        </div>
+    </div>
+    <!-- Jquery Core Js -->
+    <script src="assets/bundles/libscripts.bundle.js"></script>
+    <script src="assets/js/sweetalert.min.js"></script>
+    <script src="assets/bundles/vendorscripts.bundle.js"></script>
+    <!-- Lib Scripts Plugin Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(".navbar-toggler").on('click', function() {
+            $("html").toggleClass("nav-open");
+        });
+        //=============================================================================
+        $('.form-control').on("focus", function() {
+            $(this).parent('.input-group').addClass("input-group-focus");
+        }).on("blur", function() {
+            $(this).parent(".input-group").removeClass("input-group-focus");
+        });
+    </script>
+</body>
+<!-- Mirrored from www.wrraptheme.com/templates/compass/html/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:07 GMT -->
+
+</html>
