@@ -8,7 +8,7 @@ const cookieParser      = require('cookie-parser');
 const connectFlash      = require('connect-flash');
 const session           = require('./config/configSession');
 const connectDB         = require('./config/connectDB');
-
+const passport          = require('passport');
 
 require('dotenv').config();
 
@@ -23,6 +23,10 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(connectFlash());
 
 app.use(cookieParser());
+
+// config passport js
+app.use(passport.initialize());
+app.use(passport.session());
 
 configViewEngine(app);
 

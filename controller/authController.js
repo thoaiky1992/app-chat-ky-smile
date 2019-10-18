@@ -2,7 +2,7 @@ const {validationResult} = require('express-validator');
 const auth = require('../service/authService');
 const _ = require('lodash');
 let getLogin = (req,res) => {
-    res.render('sign-in' ,  { errors : req.flash('errors') , success : req.flash('success')});
+    res.render('sign-in' ,  { errors : req.flash('errors') , success : req.flash('success')} );
 }
 let getRegister = (req,res) => {
     res.render('sign-up', { errors : req.flash('errors') , success : req.flash('success')} );
@@ -32,7 +32,7 @@ let register = async (req,res) => {
     } catch (error) {
         errorArr.push(error);
         req.flash('errors',errorArr);
-        res.redirect('/sign-up');
+        res.redirect('/sign-up',);
     }
 
 }

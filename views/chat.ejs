@@ -17,6 +17,8 @@
 <link rel="stylesheet" href="assets/css/chatapp.css">
 <link rel="stylesheet" href="assets/css/color_skins.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="assets/js/jquery-3.4.1.min.js"></script>
 </head>
 <body class="theme-cyan">
 <!-- Page Loader -->
@@ -493,7 +495,7 @@
 
 <script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
 
 <script>
@@ -506,7 +508,44 @@ $(document).ready(function(){
     })
 })
 </script>
+<!-- Alert Errors and Success -->
+<% if(errors != "") { %>
+    <script>
+        $(function(){
+            toastr.options = {
+                "closeButton": true, // click x thì mất
+                "timeOut": "10000", // sau 10s thì mất
+                "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
+            }
+        })
+    </script>
+    <% errors.forEach(function(error){ %>
+        <script>
+            $(function(){
+                toastr.error("<%= error %>")
+            })
+        </script>
+    <% }) %>
+<% } %>
 
+<% if(success != "") { %>
+    <script>
+        $(function(){
+            toastr.options = {
+                "closeButton": true, // click x thì mất
+                "timeOut": "10000", // sau 10s thì mất
+                "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
+            }
+        })
+    </script>
+    <% success.forEach(function(item){ %>
+        <script>
+            $(function(){
+                toastr.success("<%= item %>")
+            })
+        </script>
+    <% }) %>
+<% } %>
 </body>
 
 <!-- Mirrored from www.wrraptheme.com/templates/compass/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:58 GMT -->
