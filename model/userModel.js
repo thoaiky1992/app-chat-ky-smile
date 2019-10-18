@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+const mongoose =  require('mongoose');
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const UserSchema  = new Schema({
     username    : String,
-    gender      : {type: String , default : 'male'},
     phone       : {type: String , default : null},
     address     : {type: String , default : null},
     avatar      : {type: String , default : 'avatar-default.jpg'},
@@ -52,6 +51,12 @@ UserSchema.statics = { // UserSchema.statics : để tìm bản ghi và truy v�
         return this.findOneAndUpdate(
             {"local.verifyToken":token},
             {"local.isActive" : true,"local.verifyToken":null}
+        ).exec();
+    },
+    findEmailAndChangPassword(email,newPassword){
+        return this.findOneAndUpdate(
+            {"local.email":email},
+            {"local.password" : newPassword}
         ).exec();
     },
     findByFacebookUid(uid){

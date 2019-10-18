@@ -114,6 +114,45 @@
             <%- content %>
         </div>
     </div>
+    <!-- Alert Errors and Success -->
+    <% if(errors != "") { %>
+        <script>
+            $(function(){
+                toastr.options = {
+                    "closeButton": true, // click x thì mất
+                    "timeOut": "10000", // sau 10s thì mất
+                    "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
+                }
+            })
+        </script>
+        <% errors.forEach(function(error){ %>
+            <script>
+                $(function(){
+                    toastr.error("<%= error %>")
+                })
+            </script>
+        <% }) %>
+    <% } %>
+    
+    <% if(success != "") { %>
+        <script>
+            $(function(){
+                toastr.options = {
+                    "closeButton": true, // click x thì mất
+                    "timeOut": "10000", // sau 10s thì mất
+                    "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
+                }
+            })
+        </script>
+        <% success.forEach(function(item){ %>
+            <script>
+                $(function(){
+                    toastr.success("<%= item %>")
+                })
+            </script>
+        <% }) %>
+    <% } %>
+
     <!-- Jquery Core Js -->
     <script src="assets/bundles/libscripts.bundle.js"></script>
     <script src="assets/js/sweetalert.min.js"></script>

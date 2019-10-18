@@ -9,13 +9,7 @@
                 </div>
                 <h5>Sign Up</h5>
             </div>
-            <div class="content">                                                
-                <div class="input-group">
-                    <input type="text" id="name" class="form-control" name="username" autocomplete="off" placeholder="Enter User Name">
-                    <span class="input-group-addon">
-                        <i class="zmdi zmdi-account-circle"></i>
-                    </span>
-                </div>
+            <div class="content">
                 <div class="input-group">
                     <input type="text" id="email" class="form-control" autocomplete="off" name="email" placeholder="Enter Email">
                     <span class="input-group-addon">
@@ -48,21 +42,3 @@
         </form>
     </div>
 </div>
-<% if(errors != "") { %>
-    <script>
-        $(function(){
-            toastr.options = {
-                "closeButton": true, // click x thì mất
-                "timeOut": "10000", // sau 10s thì mất
-                "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
-            }
-        })
-    </script>
-    <% errors.forEach(function(error){ %>
-        <script>
-            $(function(){
-                toastr.error("<%= error %>")
-            })
-        </script>
-    <% }) %>
-<% } %>
