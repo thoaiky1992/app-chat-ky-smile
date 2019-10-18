@@ -61,7 +61,7 @@
     <% errors.forEach(function(error){ %>
         <script>
             $(function(){
-                toastr.info("<%= error %>")
+                toastr.error("<%= error %>")
             })
         </script>
     <% }) %>
