@@ -25,7 +25,8 @@ let register =  (email,password,protocol,host) => {
                 email : email , 
                 password : bcrypt.hashSync(password,salt),
                 verifyToken : uuidv4()
-            }
+            },
+            type : 1
         };
         let user = await userModel.createNew(userItem);
         //send Mail

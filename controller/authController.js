@@ -1,4 +1,5 @@
 const {validationResult} = require('express-validator');
+const {transSuccess } = require('../lang/vi');
 const auth = require('../service/authService');
 const _ = require('lodash');
 let getLogin = (req,res) => {
@@ -64,11 +65,35 @@ let forgotPassword = async (req,res) => {
         return res.redirect('/forgot-password');
     }
 }
+let getLogout = (req,res) => {
+    req.logout(); // remove session passport
+    req.flash('success',transSuccess.logout_success);
+    return res.redirect('/sign-in')
+}
+let checkLoggedIn = (req,res,next) => {
+    if(!req.isAuthenticated()){
+        return res.redirect('/sign-in');
+    }
+    next();
+}
+let checkLoggedOut = (req,res,next) => {
+    if(req.isAuthenticated()){
+        return res.redirect('/chat');
+    }
+    next();
+}
+let updateUser = (req,res) => {
+    console.log(req.body)
+}
 module.exports = {
     register,
     getLogin,
     getRegister,
     getForgotPassword,
     verifyAccount,
-    forgotPassword
+    forgotPassword,
+    getLogout,
+    checkLoggedIn,
+    checkLoggedOut,
+    updateUser
 }

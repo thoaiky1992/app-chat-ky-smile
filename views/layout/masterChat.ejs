@@ -1,0 +1,339 @@
+<!doctype html>
+<html class="no-js " lang="en">
+
+<!-- Mirrored from www.wrraptheme.com/templates/compass/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:57 GMT -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
+
+<title>App Chat Kỳ Smile</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<!-- Favicon-->
+<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+<!-- Custom Css -->
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/chatapp.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="assets/js/jquery-3.4.1.min.js"></script>
+</head>
+<body class="theme-cyan">
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/logo.svg" width="48" height="48" alt="Compass"></div>
+        <p>Please wait...</p>
+    </div>
+</div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="col-12">        
+        <div class="navbar-header">
+            <a href="javascript:void(0);" class="bars"></a>
+            <a class="navbar-brand" href="index-2.html"><img src="assets/images/logo.svg" width="30" alt="Compass"><span class="m-l-10">Compass</span></a>
+        </div>
+        <ul class="nav navbar-nav navbar-left">
+            <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>            
+            
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="zmdi zmdi-notifications"></i>
+                <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right slideDown">
+                    <li class="header">NOTIFICATIONS</li>
+                    <li class="body">
+                        <ul class="menu list-unstyled">
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-blue"><i class="zmdi zmdi-account"></i></div>
+                                <div class="menu-info">
+                                    <h4>8 New Members joined</h4>
+                                    <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                                </div>
+                                </a> </li>
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-amber"><i class="zmdi zmdi-shopping-cart"></i></div>
+                                <div class="menu-info">
+                                    <h4>4 Sales made</h4>
+                                    <p> <i class="zmdi zmdi-time"></i> 22 mins ago </p>
+                                </div>
+                                </a> </li>
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-red"><i class="zmdi zmdi-delete"></i></div>
+                                <div class="menu-info">
+                                    <h4><b>Nancy Doe</b> Deleted account</h4>
+                                    <p> <i class="zmdi zmdi-time"></i> 3 hours ago </p>
+                                </div>
+                                </a> </li>
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-green"><i class="zmdi zmdi-edit"></i></div>
+                                <div class="menu-info">
+                                    <h4><b>Nancy</b> Changed name</h4>
+                                    <p> <i class="zmdi zmdi-time"></i> 2 hours ago </p>
+                                </div>
+                                </a> </li>
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-grey"><i class="zmdi zmdi-comment-text"></i></div>
+                                <div class="menu-info">
+                                    <h4><b>John</b> Commented your post</h4>
+                                    <p> <i class="zmdi zmdi-time"></i> 4 hours ago </p>
+                                </div>
+                                </a> </li>
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-purple"><i class="zmdi zmdi-refresh"></i></div>
+                                <div class="menu-info">
+                                    <h4><b>John</b> Updated status</h4>
+                                    <p> <i class="zmdi zmdi-time"></i> 3 hours ago </p>
+                                </div>
+                                </a> </li>
+                            <li> <a href="javascript:void(0);">
+                                <div class="icon-circle bg-light-blue"><i class="zmdi zmdi-settings"></i></div>
+                                <div class="menu-info">
+                                    <h4>Settings Updated</h4>
+                                    <p> <i class="zmdi zmdi-time"></i> Yesterday </p>
+                                </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="footer"> <a href="javascript:void(0);">View All Notifications</a> </li>
+                </ul>
+            </li>
+            
+            
+            <li><a href="/logout" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a></li>
+            
+        </ul>
+    </div>
+</nav>
+
+<!-- Left Sidebar -->
+<aside id="leftsidebar" class="sidebar">
+    <div class="menu">
+        <ul class="list">
+            <li style="margin:20px 0px 40px 0px ;">
+                <div class="user-info">
+                    <div class="image"><a href="profile.html"><img src="assets/images/<%= user.avatar %>" alt="User"></a></div>
+                    <div class="detail" style="margin:10px 0px 20px 0px ;">
+                        <h5><%= user.username %></h5>                      
+                    </div>
+                </div>
+            </li>
+            <li class="active" style="background: #ccc2c269;border-radius: 2px;"> 
+                <a href="/chat">
+                    <i class="zmdi zmdi-comments"></i><span>Chat</span>
+                </a>
+            </li>
+            <li> 
+                <a href="/contact">
+                    <i class="zmdi zmdi-account-box-phone"></i><span>Contact</span>
+                </a>
+            </li>
+            <li> 
+                <a href="/edit">
+                    <i class="zmdi zmdi-edit"></i><span>Edit</span>
+                </a>
+            </li>
+            <li> 
+                <a href="javascript:void(0);">
+                </a>
+            </li>
+            <li> 
+                <a href="javascript:void(0);">
+                </a>
+            </li>
+            <li> 
+                <a href="javascript:void(0);">
+                </a>
+            </li>
+            <li> 
+                <a href="javascript:void(0);">
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
+
+
+<!-- Content-->
+<%- content %>
+
+<!-- Modal -->
+<div id="modalNewGroup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add New Group</h4>
+      </div>
+      <!-- div-search-user-add-to-group-->
+      <div class="modal-body div-search-user-add-to-group" style="display: none;">
+        <div class="input-group search">
+            <input type="text" class="form-control" placeholder="Search...">
+            <span class="input-group-addon">
+                <i class="zmdi zmdi-search"></i>
+            </span>
+        </div>
+        <div class="body table-responsive">
+            <table class="table table-hover m-b-0 c_list">
+                
+                    <tbody>
+                    <tr>
+                        <td>
+                            <img src="assets/images/xs/avatar1.jpg" class="rounded-circle avatar" alt="">
+                            <p class="c_name">John Smith </p>
+                        </td>
+                        <td class="table-phone-mobile">
+                            <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i>264-625-2583</span>
+                        </td>
+                        <td class="table-address-mobile">
+                            <address><i class="zmdi zmdi-pin"></i>123 6th St. Melbourne, FL 32904</address>
+                        </td>
+                        <td>
+                            <button class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round"><i class="zmdi zmdi-plus"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="assets/images/xs/avatar3.jpg" class="rounded-circle avatar" alt="">
+                            <p class="c_name">Hossein Shams </p>
+                        </td>
+                        <td class="table-phone-mobile">
+                            <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i>264-625-5689</span>
+                        </td>
+                        <td class="table-address-mobile">
+                            <address><i class="zmdi zmdi-pin"></i>44 Shirley Ave. West Chicago, IL 60185</address>
+                        </td>
+                        <td>
+                            <button class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round"><i class="zmdi zmdi-plus"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <!-- div-user-add-to-group-->
+      <div class="modal-body div-user-add-to-group">
+            <div class="body table-responsive">
+                <table class="table table-hover m-b-0 c_list">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="assets/images/xs/avatar1.jpg" class="rounded-circle avatar" alt="">
+                                <p class="c_name">John Smith </p>
+                            </td>
+                            <td class="table-phone-mobile">
+                                <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i>264-625-2583</span>
+                            </td>
+                            <td class="table-address-mobile">
+                                <address><i class="zmdi zmdi-pin"></i>123 6th St. Melbourne, FL 32904</address>
+                            </td>
+                            <td>
+                                <button class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round"><i class="zmdi zmdi-delete"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="assets/images/xs/avatar3.jpg" class="rounded-circle avatar" alt="">
+                                <p class="c_name">Hossein Shams </p>
+                            </td>
+                            <td class="table-phone-mobile">
+                                <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i>264-625-5689</span>
+                            </td>
+                            <td class="table-address-mobile">
+                                <address><i class="zmdi zmdi-pin"></i>44 Shirley Ave. West Chicago, IL 60185</address>
+                            </td>
+                            <td>
+                                <button class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round"><i class="zmdi zmdi-delete"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>    
+            <div style="padding:10px 0px;">
+                <label for="Group Name" style="margin-left: 5px;">Group Name</label>
+                <input type="text" style="height:40px;" class="form-control" placeholder="Tên Nhóm ...">
+            </div>
+            <div style="padding:10px 0px;text-align: center;">
+                <p><span>avatar group</span></p>
+                <img src="assets/images/xs/avatar3.jpg" class="rounded-circle avatar" style="box-shadow: 0px 0px 10px #4150ec;border: 1px solid #c9c0c0bf;object-fit: cover;" width="80" height="80" alt="">
+            </div>
+        </div>
+        <div class="modal-footer" style="display: none;font-weight: bold;">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">continue</button>
+        </div>
+        <div style="padding:0px 20px 20px 20px;">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Tạo Nhóm</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ Bỏ</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
+<script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+<script src="assets/js/updateUser.js"></script>
+<script>
+$(document).ready(function(){
+    $(".list_btn").on('click',function(){
+        $("#plist").toggleClass("open");
+    });
+    $('.btnNewGroup').on('click',function(){
+        $('#modalNewGroup').modal('show');
+    })
+})
+</script>
+<!-- Alert Errors and Success -->
+<% if(errors != "") { %>
+    <script>
+        $(function(){
+            toastr.options = {
+                "closeButton": true, // click x thì mất
+                "timeOut": "10000", // sau 10s thì mất
+                "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
+            }
+        })
+    </script>
+    <% errors.forEach(function(error){ %>
+        <script>
+            $(function(){
+                toastr.error("<%= error %>")
+            })
+        </script>
+    <% }) %>
+<% } %>
+
+<% if(success != "") { %>
+    <script>
+        $(function(){
+            toastr.options = {
+                "closeButton": true, // click x thì mất
+                "timeOut": "10000", // sau 10s thì mất
+                "extendedTimeOut": "5000" //hover chuột thì 5s mới mất
+            }
+        })
+    </script>
+    <% success.forEach(function(item){ %>
+        <script>
+            $(function(){
+                toastr.success("<%= item %>")
+            })
+        </script>
+    <% }) %>
+<% } %>
+</body>
+
+<!-- Mirrored from www.wrraptheme.com/templates/compass/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:58 GMT -->
+</html>

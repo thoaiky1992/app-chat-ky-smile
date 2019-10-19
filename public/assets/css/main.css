@@ -22446,6 +22446,12 @@ img:hover , a:hover {
   font-size:12px !important;
   font-family: "Muli",sans-serif;
 }
+.styleAvatarEditUser{
+  box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.2);
+  border-radius:50%;
+  border:2px solid #fff;
+  object-fit: cover;
+}
 @media only screen and (max-width: 992px) {
   .file_manager .nav-tabs {
     padding-left: 0;

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema  = new Schema({
     username    : String,
+    gender      : {type: String , default : 'male'},
     phone       : {type: String , default : null},
     address     : {type: String , default : null},
     avatar      : {type: String , default : 'avatar-default.jpg'},
@@ -24,6 +25,7 @@ const UserSchema  = new Schema({
         token   : String,
         email   : {type:String,trim : true}
     },
+    type : String,
     createdAt : {type:String,default:Date.now},
     updatedAt : {type:String,default:null},
     deletedAt : {type:String,default:null},
