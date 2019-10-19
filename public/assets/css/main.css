@@ -1863,7 +1863,7 @@ textarea.form-control:focus,textarea.form-control:active {
   border-radius: 3px;
   top: 0;
   background-color: transparent;
-  border: 1px solid rgba(182, 171, 171, 0.849);
+  border: 1px solid #eadfdf;
   -webkit-transition: opacity 0.3s linear;
   -moz-transition: opacity 0.3s linear;
   -o-transition: opacity 0.3s linear;
@@ -1964,7 +1964,7 @@ textarea.form-control:focus,textarea.form-control:active {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid rgba(163, 154, 154, 0.89);
+  border: 1px solid #d5dae0;
   display: inline-block;
   position: absolute;
   left: 3px;
@@ -15706,6 +15706,7 @@ img {
 
 .sidebar .user-info .image img {
   width: 80px;
+  height : 80px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
@@ -15713,6 +15714,7 @@ img {
   vertical-align: bottom !important;
   border: 3px solid #fff;
   box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.2);
+  object-fit : cover;
 }
 
 .sidebar .user-info .detail h4 {
@@ -18635,7 +18637,7 @@ section.content {
 
 .card .header {
   color: #424242;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   position: relative;
   box-shadow: none;
 }
@@ -18713,7 +18715,7 @@ section.content {
 .card .body {
   font-size: 14px;
   color: #424242;
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   font-weight: 400;
 }
 
@@ -22451,6 +22453,7 @@ img:hover , a:hover {
   border-radius:50%;
   border:2px solid #fff;
   object-fit: cover;
+  margin-bottom : 10px;
 }
 @media only screen and (max-width: 992px) {
   .file_manager .nav-tabs {

@@ -6,7 +6,7 @@ const sendMail = require('../config/mailer');
 const random = require('../helpers/randomPassword');
 
 let  saltRounds = 7 ;
-let register =  (email,password,protocol,host) => {
+let register =  (address,phone,email,password,gender,protocol,host) => {
     return new Promise(async(resolve,reject) => {
         let userByEmail = await userModel.findByEmail(email);
         if(userByEmail){
@@ -21,6 +21,9 @@ let register =  (email,password,protocol,host) => {
         let salt = bcrypt.genSaltSync(saltRounds);
         let userItem = {
             username : email.split('@')[0],
+            address : address,
+            gender : gender,
+            phone : phone,
             local : {
                 email : email , 
                 password : bcrypt.hashSync(password,salt),

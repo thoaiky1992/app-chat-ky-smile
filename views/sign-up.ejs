@@ -17,6 +17,18 @@
                     </span>
                 </div>
                 <div class="input-group">
+                    <input type="text" id="address" class="form-control" autocomplete="off" name="address" placeholder="Enter Address">
+                    <span class="input-group-addon">
+                        <i class="zmdi zmdi-pin"></i>
+                    </span>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="phone" class="form-control" autocomplete="off" name="phone" placeholder="Enter Phone">
+                    <span class="input-group-addon">
+                        <i class="zmdi zmdi-phone"></i>
+                    </span>
+                </div>
+                <div class="input-group">
                     <input type="password" id="password" placeholder="Password" autocomplete="off" name="password" class="form-control" />
                     <span class="input-group-addon">
                         <i class="zmdi zmdi-lock"></i>
@@ -29,12 +41,22 @@
                     </span>
                 </div>          
             </div>
-            <div class="checkbox">
-                    <input id="terms" type="checkbox">
-                    <label for="terms">
-                            I read and agree to the <a href="javascript:void(0);">terms of usage</a>
-                    </label>
+            <div class="form-group">
+                <div class="radio inlineblock m-r-20">
+                    <input type="radio" class="gender" name="gender" checked id="male" class="with-gap" value="male" required>
+                    <label for="male">Male</label>
+                </div>                                
+                <div class="radio inlineblock">
+                    <input type="radio" class="gender" name="gender" id="Female" class="with-gap" value="female" required>
+                    <label for="Female">Female</label>
                 </div>
+            </div>
+            <div class="checkbox">
+                <input id="terms" type="checkbox">
+                <label for="terms">
+                        I read and agree to the <a href="javascript:void(0);">terms of usage</a>
+                </label>
+            </div>
             <div class="footer text-center">
                 <button type="submit" class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SIGN UP</button>
                 <h6 class="m-t-20"><a class="link" href="/sign-in">You already have a membership?</a></h6>

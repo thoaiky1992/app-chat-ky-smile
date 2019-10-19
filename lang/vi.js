@@ -2,6 +2,7 @@
     email_incorrect : "Email không hợp lệ !!! ",
     password_incorrect : "Mật khẩu tối thiểu phải 8 kí tự , ít nhất 1 chữ cái và 1 chữ số !!!  ",
     password_confirmation_incorrect : "Mật khẩu xác nhận không chính xác !!",
+    update_phone : 'Số điện thoại phải bắt đầu bằng số 0 và giới hạn 10-11 kí tự số'
 }
 const transErrors = {
     account_in_use : 'Email này đã được sử dụng !!!',
@@ -32,8 +33,8 @@ const transSuccess = {
         return `Xin chào ${username} , chúc bạn có 1 ngày thật vui vẽ và tốt lành ...`;
     },
     logout_success : 'Đăng xuất tài khoản thành cmn công nhé ',
-    user_info_or_avatar_updated : 'Cập nhập thông tin thành cmn công .',
-    user_password_updated : 'Cập nhật mật khẩu thành cmn công nhé !!',
+    user_info_or_avatar_updated : 'Cập nhập thông tin thành công',
+    user_password_updated : 'Cập nhật mật khẩu thành công',
     
 }
 const transMail = {

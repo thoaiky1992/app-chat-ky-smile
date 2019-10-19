@@ -31,13 +31,13 @@ let initRoutes = (app) => {
         })(req, res, next);
       });
     router.get('/chat',AuthController.checkLoggedIn , ChatController.getChat);
+    router.get('/change-password',AuthController.checkLoggedIn , ChatController.getChangePassword);
     router.get('/contact',AuthController.checkLoggedIn ,ChatController.getContact);
     router.get('/edit',AuthController.checkLoggedIn , ChatController.getEditUser);
     router.get('/logout',AuthController.checkLoggedIn , AuthController.getLogout);
-    router.post('/update-user',AuthController.checkLoggedIn , AuthController.updateUser);
-
-
-
+    router.post('/update-avatar',AuthController.checkLoggedIn , AuthController.updateAvatar);
+    router.post('/udpate-info-user',AuthController.checkLoggedIn , AuthController.updateInfoUser);
+    router.post('/update-password',AuthController.checkLoggedIn,validationAuth.updatePassword , AuthController.updatePassword);
 
 
     return app.use('/',router);

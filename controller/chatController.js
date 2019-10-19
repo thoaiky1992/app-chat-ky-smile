@@ -19,10 +19,16 @@ let getEditUser = (req,res) => {
         user : req.user
     });
 }
+let getChangePassword = (req,res) => {
+    res.render('change-password', { 
+        errors : req.flash('errors') , 
+        success : req.flash('success'),
+        user : req.user
+    });
+}
 module.exports = {
     getChat,
     getContact,
     getEditUser,
-    
-
+    getChangePassword
 }
