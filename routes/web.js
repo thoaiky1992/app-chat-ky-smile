@@ -39,6 +39,8 @@ let initRoutes = (app) => {
     router.post('/udpate-info-user',AuthController.checkLoggedIn , AuthController.updateInfoUser);
     router.post('/update-password',AuthController.checkLoggedIn,validationAuth.updatePassword , AuthController.updatePassword);
 
+    router.get('/search-user-to-add-friend' , AuthController.checkLoggedIn , ChatController.searchUserToAddFriend );
+
 
     return app.use('/',router);
 }

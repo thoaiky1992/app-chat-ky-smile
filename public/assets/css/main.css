@@ -18715,10 +18715,12 @@ section.content {
 .card .body {
   font-size: 14px;
   color: #424242;
-  padding: 0px 20px 20px 20px;
+  padding: 20px;
   font-weight: 400;
 }
-
+.color-r{
+  color:red;
+}
 .info-box {
   height: 80px;
   display: flex;
@@ -22465,7 +22467,12 @@ img:hover , a:hover {
     display: inline-block;
   }
 }
-
+@media only screen and (max-width: 768px) {
+  .navbar .navbar-toggler{
+    position: absolute;
+    right: 0px;
+  }
+}
 @media only screen and (max-width: 425px) {
     .request-contact-mobile{
         display:block ;

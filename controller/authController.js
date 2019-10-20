@@ -168,6 +168,7 @@ let updateInfoUser = async (req,res) => {
     await userService.updateInfoUser(item,req.user._id);
     return res.status(200).send({message:transSuccess.user_info_or_avatar_updated })
 }
+
 module.exports = {
     register,
     getLogin,
@@ -180,5 +181,5 @@ module.exports = {
     checkLoggedOut,
     updateAvatar,
     updateInfoUser,
-    updatePassword
+    updatePassword,
 }

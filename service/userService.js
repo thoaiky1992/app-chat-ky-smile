@@ -1,7 +1,9 @@
 const UserModel =  require('../model/userModel');
+const contactModel = require('../model/contactModel');
 const { transErrors } = require('../lang/vi');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
+const _ = require('lodash');
 
 let saltRounds = 7 ;
 let updateUser = (id,item) => {
@@ -24,10 +26,23 @@ let updatePassWord =  (newPassword,currentPassword,idUser) => {
         await UserModel.updatePassword(idUser,bcrypt.hashSync(newPassword,salt))
         resolve(true);
     })
-    
+}
+let getUserBykeySearch = (keySearch,currentUserId) => {
+    return new Promise(async (resolve,reject) => {
+        let deprecatedUserIds = [currentUserId]; // những ID không dùng nữa
+        let contactByUsers = await contactModel.findAllByUser(currentUserId);
+        contactByUsers.forEach((contact) => {
+            deprecatedUserIds.push(contact.userID);
+            deprecatedUserIds.push(contact.contactID);
+        })
+        deprecatedUserIds = _.uniqBy(deprecatedUserIds);
+        let getAllUser = await UserModel.findAllOrAddContact(deprecatedUserIds,keySearch);
+        resolve(getAllUser);
+    })
 }
 module.exports = {
     updateUser,
     updateInfoUser,
-    updatePassWord
+    updatePassWord,
+    getUserBykeySearch
 }

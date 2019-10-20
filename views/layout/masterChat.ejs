@@ -19,12 +19,13 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="assets/js/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
 <body class="theme-cyan">
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/logo.svg" width="48" height="48" alt="Compass"></div>
+        <div class="m-t-30"><img class="zmdi-hc-spin" src="assets/images/logo.png" width="48" height="48" alt="Compass"></div>
         <p>Please wait...</p>
     </div>
 </div>
@@ -37,7 +38,7 @@
     <div class="col-12">        
         <div class="navbar-header">
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" href="index-2.html"><img src="assets/images/logo.svg" width="30" alt="Compass"><span class="m-l-10">Compass</span></a>
+            <a class="navbar-brand" href="index-2.html"><img src="assets/images/logo.png" width="30" alt="Compass"><span class="m-l-10">Compass</span></a>
         </div>
         <ul class="nav navbar-nav navbar-left">
             <li><a href="javascript:void(0);" class="ls-toggle-btn" data-close="true"><i class="zmdi zmdi-swap"></i></a></li>            
@@ -126,17 +127,17 @@
                     </div>
                 </div>
             </li>
-            <li class="active" style="background: #ccc2c269;border-radius: 2px;"> 
+            <li <% if( typeLleftSide == "chat") { %> class="active" style="background: #ccc2c269;border-radius: 2px;" <% } %> > 
                 <a href="/chat">
                     <i class="zmdi zmdi-comments"></i><span>Chat</span>
                 </a>
             </li>
-            <li> 
+            <li <% if( typeLleftSide == "contact") { %> class="contact" style="background: #ccc2c269;border-radius: 2px;" <% } %>> 
                 <a href="/contact">
                     <i class="zmdi zmdi-account-box-phone"></i><span>Contact</span>
                 </a>
             </li>
-            <li> 
+            <li<% if( typeLleftSide == "edit") { %> class="active" style="background: #ccc2c269;border-radius: 2px;" <% } %>> 
                 <a href="/edit">
                     <i class="zmdi zmdi-edit"></i><span>Edit</span>
                 </a>
@@ -282,9 +283,10 @@
 
 <script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
 <script src="assets/js/updateUser.js"></script>
+<script src="assets/js/searchUserToAddFriend.js"></script>
 <script>
 $(document).ready(function(){
     $(".list_btn").on('click',function(){

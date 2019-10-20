@@ -1,11 +1,61 @@
 ﻿<% extend('layout/masterAuth') %>
+<script type="text/javascript">
+    function isEmail(email) {
+        return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+    }
 
+    function validateForm() {
+        let email = $('#email').val();
+        let address = $('#address').val();
+        let phone = $('#phone').val();
+        let password = $('#password').val();
+        let confirmPassword = $('#confirmPassword').val();
+        if (email == "") {
+            swal("Bạn chưa nhập Email", "", "warning").
+            then(function() {
+                $('#email').focus();
+            });
+            return false;
+        } else if (address == "") {
+            swal("Bạn chưa nhập Địa Chỉ", "", "warning").
+            then(function() {
+                $('#address').focus();
+            });
+            return false;
+        }else if (phone == "") {
+            swal("Bạn chưa nhập số điện thoại", "", "warning").
+            then(function() {
+                $('#phone').focus();
+            });
+            return false;
+        } else if (password == "") {
+            swal("Bạn chưa nhập mật khẩu", "", "warning").
+            then(function() {
+                $('#password').focus();
+            });
+            return false;
+        } else if (confirmPassword == "") {
+            swal("Bạn cần nhập lại mật khẩu 1 lần nữa để xác nhận", "", "warning").
+            then(function() {
+                $('#confirmPassword').focus();
+            });
+            return false;
+        }  else {
+            if(!($('#terms')[0].checked)){
+                swal("Bạn cần tích chọn đồng ý với các điều khoản trước khi đăng kí tài khoản !!! ", "", "warning").
+                then(function() {
+                });
+                return false;
+            }
+        }
+    }
+</script>
 <div class="col-md-12 content-center">
     <div class="card-plain">
         <form class="form" method="POST" onsubmit="return validateForm()" action="/register">
             <div class="header">
                 <div class="logo-container">
-                    <img src="assets/images/logo.svg" alt="">
+                    <img src="assets/images/logo.png" alt="">
                 </div>
                 <h5>Sign Up</h5>
             </div>

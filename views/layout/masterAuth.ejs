@@ -17,56 +17,6 @@
     <link rel="stylesheet" href="assets/css/color_skins.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="assets/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript">
-        function isEmail(email) {
-            return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-        }
-
-        function validateForm() {
-            let name = $('#name').val();
-            let email = $('#email').val();
-            let password = $('#password').val();
-            let confirmPassword = $('#confirmPassword').val();
-            if (name == "") {
-                swal("Bạn chưa nhập Tên", "", "warning").
-                then(function() {
-                    $('#name').focus();
-                });
-                return false;
-            } else if (email == "") {
-                swal("Bạn chưa nhập Email", "", "warning").
-                then(function() {
-                    $('#email').focus();
-                });
-                return false;
-            } else if (password == "") {
-                swal("Bạn chưa nhập mật khẩu", "", "warning").
-                then(function() {
-                    $('#password').focus();
-                });
-                return false;
-            } else if (confirmPassword == "") {
-                swal("Bạn cần nhập lại mật khẩu 1 lần nữa để xác nhận", "", "warning").
-                then(function() {
-                    $('#confirmPassword').focus();
-                });
-                return false;
-            } else if(!isEmail(email)) {
-                swal("Email không hợp lệ !!! ", "", "warning").
-                then(function() {
-                    $('#email').focus();
-                });
-                return false;
-            } else {
-                if(!($('#terms')[0].checked)){
-                    swal("Bạn cần tích chọn đồng ý với các điều khoản trước khi đăng kí tài khoản !!! ", "", "warning").
-                    then(function() {
-                    });
-                    return false;
-                }
-            }
-        }
-    </script>
 </head>
 
 <body class="theme-cyan authentication sidebar-collapse">
