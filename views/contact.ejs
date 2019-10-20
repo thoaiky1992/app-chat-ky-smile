@@ -17,20 +17,20 @@
             <div class="col-lg-5 col-md-6 col-sm-12 request-contact-mobile" >
                 <button type="button" class="btn btn-simple dropdown-toggle btn-round" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="zmdi zmdi-label"></i>
-                    <span class="caret-mobile">Tìm Liên hệ</span>
+                    <span class="caret">Tìm Liên hệ</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right slideDown dropdown-menu-mobile">
-                    <li>
+                    <li data-contact="1">
                         <a href="javascript:void(0);">Tìm Liên hệ</a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);">Danh Bạ <span>(10)</span></a>
+                    <li data-contact="2">
+                        <a href="javascript:void(0);">Danh Bạ <span class="color-r">(10)</span></a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span>(1)</span></a>
+                    <li data-contact="3">
+                        <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span class="color-r">(1)</span></a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);">Đang Chờ Xác Nhận <span>(2)</span></a>
+                    <li data-contact="4">
+                        <a href="javascript:void(0);">Đang Chờ Xác Nhận <span class="color-r">(2)</span></a>
                     </li>
                 </ul>
             </div>
@@ -58,17 +58,17 @@
                                             <span class="caret">Tìm Liên hệ</span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right slideDown">
-                                            <li>
+                                            <li data-contact="1">
                                                 <a href="javascript:void(0);">Tìm Liên hệ</a>
                                             </li>
-                                            <li>
-                                                <a href="javascript:void(0);">Danh Bạ <span>(10)</span></a>
+                                            <li data-contact="2">
+                                                <a href="javascript:void(0);">Danh Bạ <span class="color-r">(10)</span></a>
                                             </li>
-                                            <li>
-                                                <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span>(1)</span></a>
+                                            <li data-contact="3">
+                                                <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span class="color-r">(1)</span></a>
                                             </li>
-                                            <li>
-                                                <a href="javascript:void(0);">Đang Chờ Xác Nhận <span>(2)</span></a>
+                                            <li data-contact="4">
+                                                <a href="javascript:void(0);">Đang Chờ Xác Nhận <span class="color-r">(2)</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -89,3 +89,10 @@
         </div>
     </div>
 </section>
+<script>
+$(function(){
+    $('.slideDown > li').on('click',function(){
+        $('.caret').html($(this).find('a').html().split('<')[0]);
+    })
+})
+</script>

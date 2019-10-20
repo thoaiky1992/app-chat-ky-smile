@@ -1,4 +1,5 @@
 const userService = require('../service/userService');
+const contactService = require('../service/contactService');
 const ejs = require('ejs');
 const { promisify } =  require('util');
 // Make ejs function renderFile available with async/await
@@ -47,11 +48,21 @@ let searchUserToAddFriend = async(req,res) => {
         return res.status(500).send(error);
     }
 }
+let addContact = async (req,res) => {
+    try {
+        let idUserReceiver = req.query.idUserReceiver;
+        let newContact = await contactService.addNewContact(idUserReceiver,req.user._id);
+        return res.status(200).send({success:!!newContact});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
 module.exports = {
     getChat,
     getContact,
     getEditUser,
     getChangePassword,
-    searchUserToAddFriend
+    searchUserToAddFriend,
+    addContact
     
 }

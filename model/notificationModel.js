@@ -54,27 +54,59 @@ const NOTIFICATION_CONTENTS = {
     getContent : (notificationType,isRead,userId,userName,userAvatar) => {
         if(notificationType === NOTIFICATION_TYPES.ADD_CONTACT){
             if(!isRead){
-                return `<div class="notify-readed-false" data-uid="${ userId }">
-                <img class="avatar-small" src="images/users/${userAvatar}"alt="">
-                <strong>${userName}</strong> đã gửi cho bạn một lời mời kết bạn!
-                </div>`;
+                return `
+                <li> 
+                    <a href="javascript:void(0);">
+                        <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                            <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                        </div>
+                        <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                            <h4>${userName} đã gửi cho bạn 1 lời mời kết bạn</h4>
+                            <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                        </div>
+                    </a> 
+                </li>`;
             }
-            return `<div data-uid="${ userId }">
-                <img class="avatar-small" src="images/users/${userAvatar}"alt="">
-                <strong>${userName}</strong> đã gửi cho bạn một lời mời kết bạn!
-                </div>`;
+            return `
+            <li> 
+                <a href="javascript:void(0);">
+                    <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                        <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                    </div>
+                    <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                        <h4>${userName} đã gửi cho bạn 1 lời mời kết bạn</h4>
+                        <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                    </div>
+                </a> 
+            </li>`;
         }
         if(notificationType === NOTIFICATION_TYPES.APPROVE_CONTACT){
             if(!isRead){
-                return `<div class="notify-readed-false" data-uid="${ userId }">
-                <img class="avatar-small" src="images/users/${userAvatar}"alt="">
-                <strong>${userName}</strong> đã chấp nhận lời mời kết bạn !
-                </div>`;
+                return `
+                <li> 
+                    <a href="javascript:void(0);">
+                        <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                            <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                        </div>
+                        <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                            <h4>${userName} đã chấp nhận lời mời kết bạn</h4>
+                            <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                        </div>
+                    </a> 
+                </li>`;
             }
-            return `<div data-uid="${ userId }">
-                <img class="avatar-small" src="images/users/${userAvatar}"alt="">
-                <strong>${userName}</strong> đã chấp nhận lời mời kết bạn !
-                </div>`;
+            return `
+            <li> 
+                <a href="javascript:void(0);">
+                    <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                        <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                    </div>
+                    <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                        <h4>${userName} đã chấp nhận lời mời kết bạn</h4>
+                        <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                    </div>
+                </a> 
+            </li>`;
         }
         return "No matching with any notification type.";
     }

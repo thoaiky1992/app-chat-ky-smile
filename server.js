@@ -9,10 +9,14 @@ const connectFlash      = require('connect-flash');
 const session           = require('./config/configSession');
 const connectDB         = require('./config/connectDB');
 const passport          = require('passport');
+const configSocketIo    = require('./config/passportSocketio');
+const socketio          = require('socket.io');
+const initSockets       = require('./sockets/index');
 
 require('dotenv').config();
 
-const server = http.createServer(app);
+const server    = http.createServer(app);
+const io        = socketio(server);
 
 connectDB();
 
@@ -28,8 +32,14 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
+// config socketIo
+configSocketIo(io,cookieParser,session.sessionStore);
+
 configViewEngine(app);
 
 initRoutes(app);
+
+// init all socket
+initSockets(io);
 
 server.listen(process.env.PORT);
