@@ -34,6 +34,10 @@ $(function(){
     })
     $('.btnSutmitEditUser').on('click',function(e){
         e.preventDefault();
+        if(!($('#checkbox')[0].checked)){
+            toastr.warning('Vui lòng tích chọn đồng ý điều khoản trước khi thay đổi thông tin');
+            return;
+        }
         callUpdateInfoUser();
         if(userAvatar !== null){
             callUpdateAvatar();
@@ -51,7 +55,7 @@ function callUpdateAvatar(){
         data : userAvatar,
         success:function(result){
             $('#imgLeftSideBar').attr('src',result.imageSrc);
-            toastr.success(result.message);
+            toastr.success("Cập nhật avatar thành công");
             $('#avatarUser').val(null);
             userAvatar = null;
         },
@@ -84,9 +88,6 @@ function callUpdateInfoUser(){
     }else if(phone == ""){
         toastr.warning('Phone không được để trống');
         $('#phone').focus();
-        return;
-    }else if(!($('#checkbox')[0].checked)){
-        toastr.warning('Vui lòng tích chọn đồng ý điều khoản trước khi thay đổi thông tin');
         return;
     }else{
         $.ajax({

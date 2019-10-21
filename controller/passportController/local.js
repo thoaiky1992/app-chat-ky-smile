@@ -14,7 +14,7 @@ let initPassportLocal = () => {
 		try {
 			let user = await userModel.findByEmail(email);
 			if(!user){
-				return done(null,false,req.flash('errors',transErrors.login_failed));
+				return done(null,false,req.flash('errors',transErrors.account_undefined));
 			}
 			if(!user.local.isActive){
 				return done(null,false,req.flash('errors',transErrors.account_not_active));
