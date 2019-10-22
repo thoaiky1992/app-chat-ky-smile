@@ -291,6 +291,10 @@ $(document).ready(function(){
     <% }) %>
 <% } %>
 </body>
-
+<script>
+    socket.on('all',function(data){
+                console.log(data);
+            })
+</script>
 <!-- Mirrored from www.wrraptheme.com/templates/compass/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:58 GMT -->
 </html>

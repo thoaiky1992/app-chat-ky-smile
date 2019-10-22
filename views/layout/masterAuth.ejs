@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="assets/css/color_skins.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body class="theme-cyan authentication sidebar-collapse">
@@ -122,6 +123,13 @@
         }).on("blur", function() {
             $(this).parent(".input-group").removeClass("input-group-focus");
         });
+        $(function(){
+        
+            const socket = io();
+            socket.on('all',function(data){
+                console.log(data);
+            })
+        })
     </script>
 </body>
 <!-- Mirrored from www.wrraptheme.com/templates/compass/html/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:07 GMT -->

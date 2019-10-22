@@ -1,4 +1,5 @@
 let userAvatar = null;
+let update = false;
 $(function(){
     $(document).on('click','.changeAvatarUser',function(){
         $('#avatarUser').trigger('click');
@@ -28,6 +29,7 @@ $(function(){
             let formData =  new FormData();
             formData.append('avatar',fileData);
             userAvatar = formData;
+            update = true;
         }else{
             toastr.warning('Trình duyệt của bạn không hỗ trợ FileReader',7);
         }
@@ -42,7 +44,11 @@ $(function(){
         if(userAvatar !== null){
             callUpdateAvatar();
         }
-        
+        if(update = true){
+            toastr.success('Cập nhật thông tin thành công',"",{timeOut:5000});
+            update = false;
+        }
+        $('#checkbox')[0].checked = false;
     })
 })
 function callUpdateAvatar(){
@@ -55,9 +61,9 @@ function callUpdateAvatar(){
         data : userAvatar,
         success:function(result){
             $('#imgLeftSideBar').attr('src',result.imageSrc);
-            toastr.success("Cập nhật avatar thành công");
             $('#avatarUser').val(null);
             userAvatar = null;
+            update = true;
         },
         error:function(error){
             console.log(error)
@@ -95,7 +101,7 @@ function callUpdateInfoUser(){
             type : 'POST',
             data : {username : username , address : address , phone : phone , gender : gender},
             success : function ( data ){
-                toastr.success(data.message);
+                update = true;
             },  
             error : function ( error ){
                 console.log(error)
