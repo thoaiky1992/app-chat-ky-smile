@@ -40,6 +40,8 @@ let initRoutes = (app) => {
     router.post('/update-password',AuthController.checkLoggedIn,validationAuth.updatePassword , AuthController.updatePassword);
     router.get('/search-user-to-add-friend' , AuthController.checkLoggedIn , ChatController.searchUserToAddFriend );
     router.get('/add-contact' , AuthController.checkLoggedIn , ChatController.addContact );
+    router.get('/get-data-by-type' , AuthController.checkLoggedIn , ChatController.getDataByType );
+    
 
     return app.use('/',router);
 }

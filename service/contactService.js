@@ -1,5 +1,8 @@
 const contactModel = require('../model/contactModel');
+const userModel = require('../model/userModel');
 const notificationModel = require('../model/notificationModel');
+const _ = require('lodash');
+const LIMIT = 6;
 let addNewContact = (idUserReceiver,currentIdUser) => {
     return new Promise( async (resolve,reject) => {
         let contactExists = await contactModel.checkExists(currentIdUser,idUserReceiver)
@@ -21,6 +24,21 @@ let addNewContact = (idUserReceiver,currentIdUser) => {
         resolve(newContact);
     })
 }
+let getListUserContact = (currentIdUser) => {
+    return new Promise( async (resolve,reject) => {
+        let contacts = await contactModel.getContacts(currentIdUser,LIMIT);
+        let users = contacts.map( async (contact) => {
+            if(contact.contactID == currentIdUser){
+                return await userModel.getNormalUserDataById(contact.userID);
+            }
+            else{
+                return await userModel.getNormalUserDataById(contact.contactID);
+            }
+        });
+        resolve(await Promise.all(users));
+    })
+}
 module.exports = {
-    addNewContact
+    addNewContact,
+    getListUserContact
 }

@@ -75,17 +75,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="card divContact" style="margin-bottom: 0px;">
+                                    <!-- table render-->
+                                        
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>           
-        </div>
-        <div class="row clearfix">  
-            <div class="col-lg-12">
-                <div class="card divContact">
-                    <!-- table render-->
-                        
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -93,6 +93,23 @@
 $(function(){
     $('.slideDown > li').on('click',function(){
         $('.caret').html($(this).find('a').html().split('<')[0]);
+        let type = $(this).attr('data-contact');
+        getListUserContact(type);
+        
     })
 })
+function getListUserContact(type){
+    $.ajax({
+        url  : '/get-data-by-type',
+        type : 'GET',
+        data : { type : type },
+        success : function (data) {
+            $('.divContact').html(data.tableUserSide);
+            $('.c_list tbody').append(`
+            
+            `);
+            $('.search').css({'display':'none'});
+        }
+    })
+}
 </script>

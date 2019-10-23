@@ -95,7 +95,7 @@ UserSchema.statics = { // UserSchema.statics : để tìm bản ghi và truy v�
         },{_id:1,username:1,address:1,avatar:1,phone:1}).exec();
     },
     getNormalUserDataById(id){
-        return this.findById(id,{_id:1,username:1,address:1,avatar:1}).exec();
+        return this.findById(id,{_id:1,username:1,address:1,avatar:1,phone:1}).exec();
     },
     findAllToAddGroupChat(friendIds, keyword){
         return this.find({

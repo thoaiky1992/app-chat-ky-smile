@@ -57,12 +57,23 @@ let addContact = async (req,res) => {
         return res.status(500).send(error);
     }
 }
+let getDataByType = async (req,res) => {
+    let type = req.query.type;
+    if(type == "2"){
+        let listUserContact = await contactService.getListUserContact(req.user._id);
+        let tableSideListUserContact = await renderFile('views/renderServerSide/tableListUserContact.ejs',{
+            users : listUserContact
+        })
+        return res.status(200).send({tableUserSide:tableSideListUserContact});
+    }
+}
 module.exports = {
     getChat,
     getContact,
     getEditUser,
     getChangePassword,
     searchUserToAddFriend,
-    addContact
+    addContact,
+    getDataByType
     
 }
