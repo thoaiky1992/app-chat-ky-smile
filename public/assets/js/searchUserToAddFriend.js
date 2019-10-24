@@ -16,13 +16,11 @@ $(function(){
         $.get('/add-contact',{idUserReceiver:idUserReceiver},function(data){
             if(data.success){
                 thiss.parent().parent().remove();
+                increaseNumberNotiContact("dang-cho-xac-nhan")
                 socket.emit('add-new-contact',idUserReceiver)
             }
         })
     })
-
-
-
     socket.on('response-add-new-contact',function(data){
         let itemNofity = `
         <li> 
@@ -38,5 +36,6 @@ $(function(){
         </li>`;
         $('.list-unstyled').append(itemNofity);
         onNotifyNavbar();
+        increaseNumberNotiContact('yeu-cau-ket-ban');
     })
 })

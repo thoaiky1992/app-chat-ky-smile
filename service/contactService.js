@@ -64,9 +64,42 @@ let getContactsRecevied = (currentIdUser) => {
         }
     })
 }
+let countAllContacts = (currentIdUser) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let count = await contactModel.countAllContacts(currentIdUser);
+            resolve(count);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+let countAllContactsSend = (currentIdUser) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let count = await contactModel.countAllContactsSend(currentIdUser);
+            resolve(count);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+let countAllContactsRecevied = (currentIdUser) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let count = await contactModel.countAllContactsRecevied(currentIdUser);
+            resolve(count);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports = {
     addNewContact,
     getListUserContact,
     getContactsSend,
-    getContactsRecevied
+    getContactsRecevied,
+    countAllContacts,
+    countAllContactsSend,
+    countAllContactsRecevied
 }

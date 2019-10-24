@@ -24,13 +24,13 @@
                         <a href="javascript:void(0);">Tìm Liên hệ</a>
                     </li>
                     <li data-contact="2">
-                        <a href="javascript:void(0);">Danh Bạ <span class="color-r">(10)</span></a>
-                    </li>
+                        <a href="javascript:void(0);">Danh Bạ <span data-id="<%= user._id %>"lass="color-r danh-ba">(<%= countAllContacts %>)</span></a>
+                    </li> 
                     <li data-contact="3">
-                        <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span class="color-r">(1)</span></a>
+                        <a href="javascript:void(0);">Đang Chờ Xác Nhận <span data-id="<%= user._id %>" class="color-r dang-cho-xac-nhan">(<%= countAllContactsSend %>)</span></a>
                     </li>
                     <li data-contact="4">
-                        <a href="javascript:void(0);">Đang Chờ Xác Nhận <span class="color-r">(2)</span></a>
+                        <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span data-id="<%= user._id %>" class="color-r yeu-cau-ket-ban">(<%= countAllContactsRecevied  %>)</span></a>
                     </li>
                 </ul>
             </div>
@@ -62,13 +62,13 @@
                                                 <a href="javascript:void(0);">Tìm Liên hệ</a>
                                             </li>
                                             <li data-contact="2">
-                                                <a href="javascript:void(0);">Danh Bạ <span class="color-r">(10)</span></a>
+                                                <a href="javascript:void(0);">Danh Bạ <span data-id="<%= user._id %>" class="color-r danh-ba">(<%= countAllContacts %>)</span></a>
                                             </li>
                                             <li data-contact="3">
-                                                <a href="javascript:void(0);">Đang Chờ Xác Nhận <span class="color-r">(2)</span></a>
+                                                <a href="javascript:void(0);">Đang Chờ Xác Nhận <span data-id="<%= user._id %>" class="color-r dang-cho-xac-nhan">(<%= countAllContactsSend %>)</span></a>
                                             </li>
                                             <li data-contact="4">
-                                                <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span class="color-r">(1)</span></a>
+                                                <a href="javascript:void(0);">Yêu Cầu Kết Bạn <span data-id="<%= user._id %>" class="color-r yeu-cau-ket-ban">(<%= countAllContactsRecevied  %>)</span></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -108,5 +108,13 @@ function getListUserContact(type){
             $('.divContact').html(data.tableUserSide);
         }
     })
+}
+function increaseNumberNotiContact(className){
+    let number =  $(`.${className}`).html();
+    if(number != "")
+        number.replace("(","").replace(")","");
+    number == "" ? number = 0 : number = parseInt(number);
+    number++;
+    $(`.${className}`).html(`(${number})`);
 }
 </script>

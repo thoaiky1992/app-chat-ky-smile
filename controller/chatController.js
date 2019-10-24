@@ -5,6 +5,7 @@ const { promisify } =  require('util');
 // Make ejs function renderFile available with async/await
 const renderFile = promisify(ejs.renderFile).bind(ejs);
 let getChat = (req,res) => {
+    
     res.render('chat', { 
         errors : req.flash('errors') , 
         success : req.flash('success'),
@@ -12,12 +13,19 @@ let getChat = (req,res) => {
         user : req.user
     });
 }
-let getContact = (req,res) => {
+let getContact = async (req,res) => {
+    //count contact
+    let countAllContacts = await contactService.countAllContacts(req.user._id);
+    let countAllContactsSend = await contactService.countAllContactsSend(req.user._id);
+    let countAllContactsRecevied = await contactService.countAllContactsRecevied(req.user._id)
     res.render('contact', { 
         errors : req.flash('errors') , 
         success : req.flash('success'),
         typeLleftSide : "contact",
-        user : req.user
+        user : req.user,
+        countAllContacts : countAllContacts,
+        countAllContactsSend : countAllContactsSend,
+        countAllContactsRecevied : countAllContactsRecevied
     });
 }
 let getEditUser = (req,res) => {
