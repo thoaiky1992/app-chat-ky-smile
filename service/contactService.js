@@ -38,7 +38,35 @@ let getListUserContact = (currentIdUser) => {
         resolve(await Promise.all(users));
     })
 }
+let getContactsSend = (currentIdUser) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let contactsSend = await contactModel.getContactsSend(currentIdUser,LIMIT);
+            let users = contactsSend.map( async (contact) => {
+                return await userModel.getNormalUserDataById(contact.contactID);
+            })
+            resolve(await Promise.all(users));
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+let getContactsRecevied = (currentIdUser) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let contactsRecevied = await contactModel.getContactsRecevied(currentIdUser,LIMIT);
+            let users = contactsRecevied.map( async (contact) => {
+                return await userModel.getNormalUserDataById(contact.userID);
+            })
+            resolve(await Promise.all(users));
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports = {
     addNewContact,
-    getListUserContact
+    getListUserContact,
+    getContactsSend,
+    getContactsRecevied
 }

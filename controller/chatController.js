@@ -65,6 +65,19 @@ let getDataByType = async (req,res) => {
             users : listUserContact
         })
         return res.status(200).send({tableUserSide:tableSideListUserContact});
+    }else if(type == 3){
+        let listUserContactsSend = await contactService.getContactsSend(req.user._id);
+        let tableSideListUserContact = await renderFile('views/renderServerSide/tableListUserContactSend.ejs',{
+            users : listUserContactsSend
+        })
+        return res.status(200).send({tableUserSide:tableSideListUserContact});
+    }
+    else{
+        let listUserContactsRecevied = await contactService.getContactsRecevied(req.user._id);
+        let tableSideListUserContactsRecevied = await renderFile('views/renderServerSide/tableListUserContactRecevied.ejs',{
+            users : listUserContactsRecevied
+        })
+        return res.status(200).send({tableUserSide:tableSideListUserContactsRecevied});
     }
 }
 module.exports = {

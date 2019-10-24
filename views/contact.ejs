@@ -94,6 +94,7 @@ $(function(){
     $('.slideDown > li').on('click',function(){
         $('.caret').html($(this).find('a').html().split('<')[0]);
         let type = $(this).attr('data-contact');
+        (type == 1) ? $('.search').css({'display':'flex'}) : $('.search').css({'display':'none'});
         getListUserContact(type);
         
     })
@@ -105,10 +106,6 @@ function getListUserContact(type){
         data : { type : type },
         success : function (data) {
             $('.divContact').html(data.tableUserSide);
-            $('.c_list tbody').append(`
-            
-            `);
-            $('.search').css({'display':'none'});
         }
     })
 }
