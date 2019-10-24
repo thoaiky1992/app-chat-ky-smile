@@ -59,7 +59,9 @@ let addContact = async (req,res) => {
 }
 let getDataByType = async (req,res) => {
     let type = req.query.type;
-    if(type == "2"){
+    if(type == 1){
+        return res.status(200).send({tableUserSide:""});
+    }else if(type == "2"){
         let listUserContact = await contactService.getListUserContact(req.user._id);
         let tableSideListUserContact = await renderFile('views/renderServerSide/tableListUserContact.ejs',{
             users : listUserContact
