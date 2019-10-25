@@ -1,19 +1,24 @@
 const userService = require('../service/userService');
 const contactService = require('../service/contactService');
+const notificationService = require('../service/notificationService');
 const ejs = require('ejs');
 const { promisify } =  require('util');
 // Make ejs function renderFile available with async/await
 const renderFile = promisify(ejs.renderFile).bind(ejs);
-let getChat = (req,res) => {
-    
+let getChat = async (req,res) => {
+    //only 10 item on time
+    let notifications = await notificationService.getNotifications(req.user._id);
     res.render('chat', { 
         errors : req.flash('errors') , 
         success : req.flash('success'),
         typeLleftSide : "chat",
-        user : req.user
+        user : req.user,
+        notifications : notifications
     });
 }
 let getContact = async (req,res) => {
+    //only 10 item on time
+    let notifications = await notificationService.getNotifications(req.user._id);
     //count contact
     let countAllContacts = await contactService.countAllContacts(req.user._id);
     let countAllContactsSend = await contactService.countAllContactsSend(req.user._id);
@@ -25,23 +30,30 @@ let getContact = async (req,res) => {
         user : req.user,
         countAllContacts : countAllContacts,
         countAllContactsSend : countAllContactsSend,
-        countAllContactsRecevied : countAllContactsRecevied
+        countAllContactsRecevied : countAllContactsRecevied,
+        notifications : notifications
     });
 }
-let getEditUser = (req,res) => {
+let getEditUser = async (req,res) => {
+    //only 10 item on time
+    let notifications = await notificationService.getNotifications(req.user._id);
     res.render('edit-user', { 
         errors : req.flash('errors') , 
         success : req.flash('success'),
         typeLleftSide : "edit",
-        user : req.user
+        user : req.user,
+        notifications: notifications
     });
 }
-let getChangePassword = (req,res) => {
+let getChangePassword = async (req,res) => {
+    //only 10 item on time
+    let notifications = await notificationService.getNotifications(req.user._id);
     res.render('change-password', { 
         errors : req.flash('errors') , 
         success : req.flash('success'),
         typeLleftSide : "edit",
-        user : req.user
+        user : req.user,
+        notifications : notifications
     });
 }
 let searchUserToAddFriend = async(req,res) => {
@@ -100,6 +112,16 @@ let revertAddContactSend = async(req,res) => {
         return res.status(500).send(error);
     }
 }
+let approveAddFriend = async (req,res) => {
+    try {
+        let currentId = req.user._id;
+        let contactId = req.query.idUser;
+        let approveReq = await contactService.approveRequestContactReceived(currentId,contactId);
+        return res.status(200).send({success:true , data : approveReq});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
 module.exports = {
     getChat,
     getContact,
@@ -108,6 +130,7 @@ module.exports = {
     searchUserToAddFriend,
     addContact,
     getDataByType,
-    revertAddContactSend
+    revertAddContactSend,
+    approveAddFriend
     
 }

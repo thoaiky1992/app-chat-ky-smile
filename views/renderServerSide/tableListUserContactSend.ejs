@@ -1,8 +1,8 @@
 <div class="body table-responsive">
-    <table class="table table-hover m-b-0 c_list">
+    <table class="table table-hover m-b-0 c_list table-contact-send">
         <tbody>
             <% users.forEach(function(user){  %>
-            <tr>
+            <tr class="tr-contact-send" data-id="<%= user._id %>">
                 <td>
                     <img src="assets/images/<%= user.avatar %>" style="object-fit: cover;" width="40" height="40" class="rounded-circle avatar" alt="">
                     <p class="c_name"><%= user.username%> </p>

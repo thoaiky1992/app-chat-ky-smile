@@ -35,7 +35,7 @@ $(function(){
             </a> 
         </li>`;
         $('.load-more-list-user-contact-received').parent().parent().remove()
-        $('.c_list tbody').append(`
+        $('.table-contact-received tbody').append(`
         <tr class="tr-contact-received" data-id="${data.user._id}">
             <td>
                 <img src="assets/images/${data.user.avatar}" style="object-fit: cover;" width="40" height="40" class="rounded-circle avatar" alt="">

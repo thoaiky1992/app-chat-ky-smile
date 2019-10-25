@@ -115,10 +115,33 @@ $(function(){
             }
         })
     })
+    // đồng ý kết bạn
+    $(document).on('click','.approve-add-friend',function(){
+        let idUser = $(this).attr('data-id');
+        let thiss = $(this);
+        $.ajax({
+            url : '/approve-add-friend',
+            type : 'GET',
+            data : { idUser : idUser},
+            success : function(data) {
+                if(data.success){
+                    thiss.parent().parent().remove();
+                    socket.emit('approve-add-friend',{senderId : idUser , data : data.data})
+                }
+            } 
+        })
+    })
+
 
     socket.on('response-revert-add-contact-send',function(data){
         descreaseNumberNotiContact('yeu-cau-ket-ban');
         $(`.tr-contact-received[data-id = ${data.idSender}]`).remove();
+    })
+    socket.on('response-approve-add-friend',function(data){
+        console.log(data)
+        $('.list-unstyled').prepend(data.notify);
+        $(`.tr-contact-send[data-id=${data.currentIdUser}]`).remove();
+        descreaseNumberNotiContact("dang-cho-xac-nhan");
     })
 })
 function getListUserContact(type){
@@ -133,14 +156,12 @@ function getListUserContact(type){
 }
 function increaseNumberNotiContact(className){
     let number =  $(`.${className}`).html().replace("(","").replace(")","");
-    console.log(number)
     number == "" ? number = 0 : number = parseInt(number);
     number++;
     $(`.${className}`).html(`(${number})`);
 }
 function descreaseNumberNotiContact(className){
     let number =  $(`.${className}`).html().replace("(","").replace(")","");
-    console.log(number)
     number == "" ? number = 0 : number = parseInt(number);
     number--;
     $(`.${className}`).html(`(${number})`);

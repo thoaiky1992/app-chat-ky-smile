@@ -22457,7 +22457,9 @@ img:hover , a:hover {
   object-fit: cover;
   margin-bottom : 10px;
 }
-
+.a-notify:hover{
+  background: none !important;
+}
 @media only screen and (max-width: 992px) {
   .file_manager .nav-tabs {
     padding-left: 0;

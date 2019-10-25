@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const convertTimestampToHumanTime  = require('../helpers/convertTimestamps');
 const Schema =  mongoose.Schema;
 
 const NotificationSchema = new Schema({
@@ -51,31 +52,35 @@ const NOTIFICATION_TYPES = {
     APPROVE_CONTACT : "approve_contact"
 }
 const NOTIFICATION_CONTENTS = {
-    getContent : (notificationType,isRead,userId,userName,userAvatar) => {
+    getContent : (notificationType,isRead,userId,userName,userAvatar,createdAt) => {
         if(notificationType === NOTIFICATION_TYPES.ADD_CONTACT){
             if(!isRead){
                 return `
                 <li> 
-                    <a href="javascript:void(0);">
-                        <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
-                            <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
-                        </div>
-                        <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
-                            <h4>${userName} đã gửi cho bạn 1 lời mời kết bạn</h4>
-                            <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                    <a href="javascript:void(0);" class="a-notify" style="width: 100%;height: 80px;padding: 10px;">
+                        <div style="width: 100% !important;height: 70px;background: #c8f0f7;padding-top: 8px;padding-left: 5px">
+                            <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                                <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                            </div>
+                            <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                                <h4>${userName} đã gửi cho bạn 1 lời mời kết bạn</h4>
+                                <p><i class="zmdi zmdi-time"></i> ${ convertTimestampToHumanTime(createdAt) } </p>
+                            </div>
                         </div>
                     </a> 
                 </li>`;
             }
             return `
             <li> 
-                <a href="javascript:void(0);">
-                    <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
-                        <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
-                    </div>
-                    <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
-                        <h4>${userName} đã gửi cho bạn 1 lời mời kết bạn</h4>
-                        <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                <a href="javascript:void(0);" class="a-notify" style="width: 100%;height: 80px;padding: 10px;">
+                    <div style="width: 100% !important;height: 70px;background: #c8f0f7;padding-top: 8px;padding-left: 5px">
+                        <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                            <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                        </div>
+                        <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                            <h4>${userName} đã gửi cho bạn 1 lời mời kết bạn</h4>
+                            <p><i class="zmdi zmdi-time"></i> ${ convertTimestampToHumanTime(createdAt) } </p>
+                        </div>
                     </div>
                 </a> 
             </li>`;
@@ -84,26 +89,30 @@ const NOTIFICATION_CONTENTS = {
             if(!isRead){
                 return `
                 <li> 
-                    <a href="javascript:void(0);">
-                        <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
-                            <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
-                        </div>
-                        <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
-                            <h4>${userName} đã chấp nhận lời mời kết bạn</h4>
-                            <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                    <a href="javascript:void(0);" class="a-notify" style="width: 100%;height: 80px;padding: 10px;">
+                        <div style="width: 100% !important;height: 70px;background: #c8f0f7;padding-top: 8px;padding-left: 5px">
+                            <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                                <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                            </div>
+                            <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                                <h4>${userName} đã chấp nhận lời mời kết bạn</h4>
+                                <p><i class="zmdi zmdi-time"></i> ${ convertTimestampToHumanTime(createdAt) } </p>
+                            </div>
                         </div>
                     </a> 
                 </li>`;
             }
             return `
             <li> 
-                <a href="javascript:void(0);">
-                    <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
-                        <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
-                    </div>
-                    <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
-                        <h4>${userName} đã chấp nhận lời mời kết bạn</h4>
-                        <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+                <a href="javascript:void(0);" class="a-notify" style="width: 100%;height: 80px;padding: 10px;">
+                    <div style="width: 100% !important;height: 70px;background: #c8f0f7;padding-top: 8px;padding-left: 5px">
+                        <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                            <img src="assets/images/${userAvatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                        </div>
+                        <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                            <h4>${userName} đã chấp nhận lời mời kết bạn</h4>
+                            <p><i class="zmdi zmdi-time"></i> ${ convertTimestampToHumanTime(createdAt) } </p>
+                        </div>
                     </div>
                 </a> 
             </li>`;

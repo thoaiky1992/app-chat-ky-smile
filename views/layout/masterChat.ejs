@@ -13,9 +13,10 @@
 <!-- Favicon-->
 <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
 <!-- Custom Css -->
-<link rel="stylesheet" href="assets/css/main.css">
+
 <link rel="stylesheet" href="assets/css/chatapp.css">
 <link rel="stylesheet" href="assets/css/color_skins.css">
+<link rel="stylesheet" href="assets/css/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="assets/js/jquery-3.4.1.min.js"></script>
@@ -87,7 +88,9 @@
                     <li class="header">NOTIFICATIONS</li>
                     <li class="body">
                         <ul class="menu list-unstyled">
-                         
+                            <% notifications.forEach(function(notification){ %>
+                                <%- notification%>
+                            <% }) %>
                            
                         </ul>
                     </li>
