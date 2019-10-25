@@ -90,6 +90,16 @@ let getDataByType = async (req,res) => {
         return res.status(200).send({tableUserSide:tableSideListUserContactsRecevied});
     }
 }
+let revertAddContactSend = async(req,res) => {
+    try {
+        let currentId = req.user._id;
+        let contactId = req.query.idUser;
+        let removeReq = await contactService.removeRequestContactSent(currentId,contactId);
+        return res.status(200).send({success:!!removeReq});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
 module.exports = {
     getChat,
     getContact,
@@ -97,6 +107,7 @@ module.exports = {
     getChangePassword,
     searchUserToAddFriend,
     addContact,
-    getDataByType
+    getDataByType,
+    revertAddContactSend
     
 }

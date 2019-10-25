@@ -1,5 +1,5 @@
 const addNewContact = require('./addnewContact');
-
+const revertContactSend = require('./revertContactSend');
 let initSockets = (io) => {
     let clients = {};
     io.on('connection', (socket) => {
@@ -14,7 +14,7 @@ let initSockets = (io) => {
 
         //socket on
         addNewContact(io,socket,clients);
-
+        revertContactSend(io,socket,clients);
         socket.on('disconnect',() => {
             // remove socketId when socket disconnected
             clients[socket.request.user._id] = clients[socket.request.user._id].filter(socketId => socketId !== socket.id );

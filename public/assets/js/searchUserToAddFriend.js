@@ -34,6 +34,35 @@ $(function(){
                 </div>
             </a> 
         </li>`;
+        $('.load-more-list-user-contact-received').parent().parent().remove()
+        $('.c_list tbody').append(`
+        <tr class="tr-contact-received" data-id="${data.user._id}">
+            <td>
+                <img src="assets/images/${data.user.avatar}" style="object-fit: cover;" width="40" height="40" class="rounded-circle avatar" alt="">
+                <p class="c_name">${data.user.username}</p>
+            </td>
+            <td class="table-phone-mobile">
+                <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i>${data.user.phone}</span>
+            </td>
+            <td class="table-address-mobile">
+                <address><i class="zmdi zmdi-pin"></i>${data.user.address}</address>
+            </td>
+            <td>
+                <button data-id="${data.user._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round add-friend">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+                <button data-id="${data.user._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round add-friend">
+                    <i class="zmdi zmdi-delete"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="4">
+                <span class="load-more-list-user-contact-received">Xem Thêm...</span>
+                <div class="lds-ripple" style="display:none;"><div></div><div></div></div>
+            </td>
+        </tr>
+        `);
         $('.list-unstyled').append(itemNofity);
         onNotifyNavbar();
         increaseNumberNotiContact('yeu-cau-ket-ban');

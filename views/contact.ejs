@@ -96,7 +96,29 @@ $(function(){
         let type = $(this).attr('data-contact');
         (type == 1) ? $('.search').css({'display':'flex'}) : $('.search').css({'display':'none'});
         getListUserContact(type);
-        
+    })
+    // hoàn tác kết bạn 
+    $(document).on('click','.revert-add-contact-send',function(){
+        let idUser = $(this).attr('data-id');
+        let trInfoUser = $(this).parent().parent().remove();
+        $.ajax({
+            url : '/revert-add-contact-send',
+            type : 'GET',
+            data : {idUser : idUser},
+            success : function (data) {
+                if(data){
+                    toastr.success('Hoàn tác kết bạn thành công','',{timeOut : 5000});
+                    descreaseNumberNotiContact("dang-cho-xac-nhan");
+                    socket.emit('revert-add-contact-send',idUser);
+                }
+                    
+            }
+        })
+    })
+
+    socket.on('response-revert-add-contact-send',function(data){
+        descreaseNumberNotiContact('yeu-cau-ket-ban');
+        $(`.tr-contact-received[data-id = ${data.idSender}]`).remove();
     })
 })
 function getListUserContact(type){
@@ -110,11 +132,17 @@ function getListUserContact(type){
     })
 }
 function increaseNumberNotiContact(className){
-    let number =  $(`.${className}`).html();
-    if(number != "")
-        number.replace("(","").replace(")","");
+    let number =  $(`.${className}`).html().replace("(","").replace(")","");
+    console.log(number)
     number == "" ? number = 0 : number = parseInt(number);
     number++;
+    $(`.${className}`).html(`(${number})`);
+}
+function descreaseNumberNotiContact(className){
+    let number =  $(`.${className}`).html().replace("(","").replace(")","");
+    console.log(number)
+    number == "" ? number = 0 : number = parseInt(number);
+    number--;
     $(`.${className}`).html(`(${number})`);
 }
 </script>

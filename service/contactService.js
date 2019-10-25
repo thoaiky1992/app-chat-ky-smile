@@ -94,6 +94,18 @@ let countAllContactsRecevied = (currentIdUser) => {
         }
     })
 }
+let removeRequestContactSent = (currentID, contactID) => {
+    return new Promise(async(resolve,reject) => {
+        let removeReq = await contactModel.removeRequestContactSent(currentID,contactID);
+        if(removeReq.n === 0){
+            return reject(false)
+        }
+        //remove notification
+        let notifyTypeAddContact = notificationModel.types.ADD_CONTACT;
+        await notificationModel.model.removeRequestContactNotification(currentID,contactID,notifyTypeAddContact);
+        resolve(true);
+    })
+}
 module.exports = {
     addNewContact,
     getListUserContact,
@@ -101,5 +113,6 @@ module.exports = {
     getContactsRecevied,
     countAllContacts,
     countAllContactsSend,
-    countAllContactsRecevied
+    countAllContactsRecevied,
+    removeRequestContactSent
 }
