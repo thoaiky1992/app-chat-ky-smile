@@ -1,8 +1,10 @@
+const userModel = require('../model/userModel');
 let approveContactSend = (io,socket, clients) => {
-    socket.on('approve-add-friend',(data) => {
+    socket.on('approve-add-friend',async (data) => {
+        let userApproveAddFriend = await userModel.getNormalUserDataById(data.IdUserApproveAddFriend); 
         let result = {
-            currentIdUser : socket.request.user._id,
-            userSender : socket.request.user,
+            userApproveAddFriend : userApproveAddFriend,
+            userReceived : socket.request.user,
             notify : data.data
         }
         if(clients[data.senderId]){

@@ -24,7 +24,7 @@
                         <a href="javascript:void(0);">Tìm Liên hệ</a>
                     </li>
                     <li data-contact="2">
-                        <a href="javascript:void(0);">Danh Bạ <span data-id="<%= user._id %>"lass="color-r danh-ba">(<%= countAllContacts %>)</span></a>
+                        <a href="javascript:void(0);">Danh Bạ <span data-id="<%= user._id %>" class="color-r danh-ba">(<%= countAllContacts %>)</span></a>
                     </li> 
                     <li data-contact="3">
                         <a href="javascript:void(0);">Đang Chờ Xác Nhận <span data-id="<%= user._id %>" class="color-r dang-cho-xac-nhan">(<%= countAllContactsSend %>)</span></a>
@@ -119,6 +119,7 @@ $(function(){
     $(document).on('click','.approve-add-friend',function(){
         let idUser = $(this).attr('data-id');
         let thiss = $(this);
+        let IdUserApproveAddFriend = $('#currentIdUser').val();
         $.ajax({
             url : '/approve-add-friend',
             type : 'GET',
@@ -126,7 +127,7 @@ $(function(){
             success : function(data) {
                 if(data.success){
                     thiss.parent().parent().remove();
-                    socket.emit('approve-add-friend',{senderId : idUser , data : data.data})
+                    socket.emit('approve-add-friend',{senderId : idUser , data : data.data , IdUserApproveAddFriend : IdUserApproveAddFriend})
                 }
             } 
         })
@@ -142,6 +143,29 @@ $(function(){
         $('.list-unstyled').prepend(data.notify);
         $(`.tr-contact-send[data-id=${data.currentIdUser}]`).remove();
         descreaseNumberNotiContact("dang-cho-xac-nhan");
+        increaseNumberNotiContact("danh-ba")
+        $(`.table-contact-list-user tbody`).prepend(`
+        <tr>
+            <td>
+                <img src="assets/images/${data.userApproveAddFriend.avatar}" style="object-fit: cover;" width="40" height="40" class="rounded-circle avatar" alt="">
+                <p class="c_name">${data.userApproveAddFriend.username}</p>
+            </td>
+            <td class="table-phone-mobile">
+                <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i>${data.userApproveAddFriend.phone}</span>
+            </td>
+            <td class="table-address-mobile">
+                <address><i class="zmdi zmdi-pin"></i>${data.userApproveAddFriend.address}</address>
+            </td>
+            <td>
+                <button data-id="${data.userApproveAddFriend._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round choose-chat">
+                    <i class="zmdi zmdi-comment-more"></i>
+                </button>
+                <button data-id="${data.userApproveAddFriend._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round delete-friend-list-user">
+                    <i class="zmdi zmdi-delete"></i>
+                </button>
+            </td>
+        </tr>
+        `);
     })
 })
 function getListUserContact(type){
