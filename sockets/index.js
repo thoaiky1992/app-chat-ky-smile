@@ -2,6 +2,7 @@ const addNewContact = require('./addnewContact');
 const revertContactSend = require('./revertContactSend');
 const approveContactSend = require('./approveContactSend');
 const deleteContactSend = require('./deleteContactSend');
+const deleteFriendOfListUser = require('./deleteFriendOfListUser');
 let initSockets = (io) => {
     let clients = {};
     io.on('connection', (socket) => {
@@ -19,6 +20,7 @@ let initSockets = (io) => {
         revertContactSend(io,socket,clients);
         approveContactSend(io,socket,clients);
         deleteContactSend(io,socket,clients);
+        deleteFriendOfListUser(io,socket,clients);
 
         socket.on('disconnect',() => {
             // remove socketId when socket disconnected

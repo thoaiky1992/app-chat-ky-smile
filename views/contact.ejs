@@ -97,6 +97,27 @@ $(function(){
         (type == 1) ? $('.search').css({'display':'flex'}) : $('.search').css({'display':'none'});
         getListUserContact(type);
     })
+    //xóa bạn bè
+    $(document).on('click','.delete-friend-list-user',function(){
+        let deleteUserId = $(this).attr('data-id');
+        let thiss = $(this);
+        $.ajax({
+            url : '/delete-friend-list-user',
+            type : "GET",
+            data : { deleteUserId : deleteUserId},
+            success : function(data){
+                if(data.success){
+                    thiss.parent().parent().remove();
+                    descreaseNumberNotiContact('danh-ba');
+                    socket.emit('delete-friend-of-list-user',deleteUserId);
+                }
+            } 
+        })
+    })
+    socket.on('response-delete-friend-of-list-user',function(data){
+        descreaseNumberNotiContact('danh-ba');
+        $(`.tr-list-user[data-id = ${data}]`).remove();
+    })
     // hoàn tác kết bạn 
     $(document).on('click','.revert-add-contact-send',function(){
         let idUser = $(this).attr('data-id');
@@ -128,6 +149,7 @@ $(function(){
                 if(data.success){
                     thiss.parent().parent().remove();
                     increaseNumberNotiContact('danh-ba');
+                    descreaseNumberNotiContact('yeu-cau-ket-ban');
                     socket.emit('approve-add-friend',{senderId : idUser , data : data.data , IdUserApproveAddFriend : IdUserApproveAddFriend})
                 }
             } 
@@ -190,6 +212,7 @@ $(function(){
         `);
     })
 })
+
 function getListUserContact(type){
     $.ajax({
         url  : '/get-data-by-type',
