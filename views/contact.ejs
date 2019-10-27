@@ -127,19 +127,41 @@ $(function(){
             success : function(data) {
                 if(data.success){
                     thiss.parent().parent().remove();
+                    increaseNumberNotiContact('danh-ba');
                     socket.emit('approve-add-friend',{senderId : idUser , data : data.data , IdUserApproveAddFriend : IdUserApproveAddFriend})
                 }
             } 
         })
     })
-
-
+    // huỷ yêu cầu kết bạn
+    $(document).on('click','.delete-add-friend',function(){
+        let senderId = $(this).attr('data-id');
+        let thiss = $(this);
+        $.ajax({
+            url : '/delete-add-friend',
+            type : 'GET',
+            data : { senderId : senderId },
+            success :  function(data){
+                if(data.success){
+                    thiss.parent().parent().remove();
+                    descreaseNumberNotiContact('yeu-cau-ket-ban');
+                    socket.emit('delete-add-friend',{senderId:senderId})
+                }
+            }
+        })
+    })
+    // socket on : khi huỷ yêu cầu kết bạn
+    socket.on('response-delete-add-friend',function(data){
+        descreaseNumberNotiContact('dang-cho-xac-nhan');
+        $(`.tr-contact-send[data-id=${data._id}]`).remove();
+    })
+    // socket on : khi hoàn tác yêu cầu kết bạn
     socket.on('response-revert-add-contact-send',function(data){
         descreaseNumberNotiContact('yeu-cau-ket-ban');
         $(`.tr-contact-received[data-id = ${data.idSender}]`).remove();
     })
+    // socket on : khi chấp nhận kết bạn
     socket.on('response-approve-add-friend',function(data){
-        console.log(data)
         $('.list-unstyled').prepend(data.notify);
         $(`.tr-contact-send[data-id=${data.currentIdUser}]`).remove();
         descreaseNumberNotiContact("dang-cho-xac-nhan");

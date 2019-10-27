@@ -5,7 +5,9 @@
                 <tr>
                     <td>
                         <img src="assets/images/<%= user.avatar %>" style="object-fit: cover;" width="40" height="40" class="rounded-circle avatar" alt="">
-                        <p class="c_name"><%= user.username%> </p>
+                        <p class="c_name">
+                            <%= (user.username.length > 12) ? user.username.substr(0,11)+"..." : user.username %>
+                        </p>
                     </td>
                     <td class="table-phone-mobile">
                         <span class="phone"><i class="zmdi zmdi-phone m-r-10"></i><%= user.phone %></span>

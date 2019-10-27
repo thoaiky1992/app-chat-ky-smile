@@ -124,6 +124,15 @@ let approveRequestContactReceived = (currentID, contactID) => {
         resolve(notify);
     })
 }
+let removeRequestContactReceived = (currentID, contactID) => {
+    return new Promise(async(resolve,reject) => {
+        let removeReq = await contactModel.removeRequestContactReceived(currentID,contactID);
+        if(removeReq.n === 0){
+            return reject(false)
+        }
+        resolve(true);
+    })
+}
 module.exports = {
     addNewContact,
     getListUserContact,
@@ -133,5 +142,6 @@ module.exports = {
     countAllContactsSend,
     countAllContactsRecevied,
     removeRequestContactSent,
-    approveRequestContactReceived
+    approveRequestContactReceived,
+    removeRequestContactReceived
 }

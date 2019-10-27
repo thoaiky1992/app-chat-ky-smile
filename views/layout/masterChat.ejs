@@ -88,10 +88,9 @@
                     <li class="header">NOTIFICATIONS</li>
                     <li class="body">
                         <ul class="menu list-unstyled">
-                            <% notifications.forEach(function(notification){ %>
-                                <%- notification%>
+                            <% notifications.forEach(notification => { %>
+                                <%- notification %>
                             <% }) %>
-                           
                         </ul>
                     </li>
                     <li class="footer"> <a href="javascript:void(0);">View All Notifications</a> </li>
@@ -279,6 +278,8 @@
 <script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+<script src="assets/js/moment.js"></script>
+<script src="assets/js/moment-with-locales.js"></script>
 <script src="assets/js/onAndOffNotify.js"></script>
 <script src="assets/js/updateUser.js"></script>
 <script src="assets/js/searchUserToAddFriend.js"></script>

@@ -22460,6 +22460,11 @@ img:hover , a:hover {
 .a-notify:hover{
   background: none !important;
 }
+.slimScrollDiv ul{
+  overflow: scroll !important;
+}
+
+
 @media only screen and (max-width: 992px) {
   .file_manager .nav-tabs {
     padding-left: 0;
@@ -22477,6 +22482,9 @@ img:hover , a:hover {
   }
 }
 @media only screen and (max-width: 425px) {
+    .divContact > .body {
+      padding:0;
+    }
     .request-contact-mobile{
         display:block ;
         margin-top:10px;
@@ -22499,6 +22507,7 @@ img:hover , a:hover {
     }
 }
 @media only screen and (max-width: 320px) {
+  
   .c_list > tbody > tr  > td:last-child {
     width: 50%;
     text-align: center;

@@ -43,6 +43,7 @@ let initRoutes = (app) => {
     router.get('/get-data-by-type' , AuthController.checkLoggedIn , ChatController.getDataByType );
     router.get('/revert-add-contact-send' , AuthController.checkLoggedIn , ChatController.revertAddContactSend)
     router.get('/approve-add-friend' , AuthController.checkLoggedIn , ChatController.approveAddFriend)
+    router.get('/delete-add-friend', AuthController.checkLoggedIn , ChatController.deleteAddFriend );
     return app.use('/',router);
 }
 module.exports = initRoutes;

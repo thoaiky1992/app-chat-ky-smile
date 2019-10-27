@@ -1,4 +1,9 @@
-
+function convertTimestampToHumanTime(timestamp){
+    if(!timestamp){
+        return "";
+    }
+    return moment(timestamp).locale("vi").startOf("seconds").fromNow();
+}
 $('#search-user-to-add-frient').on('keyup',function(e){
     if(e.which == 13){
         let keySearch = $(this).val();
@@ -24,13 +29,15 @@ $(function(){
     socket.on('response-add-new-contact',function(data){
         let itemNofity = `
         <li> 
-            <a href="javascript:void(0);">
-                <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
-                    <img src="assets/images/${data.user.avatar}" style="border-radius: 50%;" width="36" height="36" alt="">
-                </div>
-                <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
-                    <h4>${data.user.username} đã gửi cho bạn 1 lời mời kết bạn</h4>
-                    <p><i class="zmdi zmdi-time"></i> 14 mins ago </p>
+            <a href="javascript:void(0);" class="a-notify" style="width: 100%;height: 80px;padding: 10px;">
+                <div style="width: 100% !important;height: 70px;background: #c8f0f7;padding-top: 8px;padding-left: 5px">
+                    <div class="icon-circle bg-blue" style="width: 36px;float: left;height: auto;">
+                        <img src="assets/images/${data.user.avatar}" style="border-radius: 50%;" width="36" height="36" alt="">
+                    </div>
+                    <div class="menu-info" style="float: left;height: auto;width: 200px;padding-bottom: 10px;">
+                        <h4>${data.user.username} đã gửi cho bạn 1 lời mời kết bạn</h4>
+                        <p><i class="zmdi zmdi-time"></i> ${ convertTimestampToHumanTime(Date.now()) } </p>
+                    </div>
                 </div>
             </a> 
         </li>`;
@@ -63,7 +70,7 @@ $(function(){
             </td>
         </tr>
         `);
-        $('.list-unstyled').append(itemNofity);
+        $('.list-unstyled').prepend(itemNofity);
         onNotifyNavbar();
         increaseNumberNotiContact('yeu-cau-ket-ban');
     })

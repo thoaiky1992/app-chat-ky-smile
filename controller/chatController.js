@@ -122,6 +122,16 @@ let approveAddFriend = async (req,res) => {
         return res.status(500).send(error);
     }
 }
+let deleteAddFriend = async (req,res) => {
+    try {
+        let currentId = req.user._id;
+        let contactId = req.query.senderId;
+        let removeReq = await contactService.removeRequestContactReceived(currentId,contactId);
+        return res.status(200).send({success:!!removeReq});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
 module.exports = {
     getChat,
     getContact,
@@ -131,6 +141,7 @@ module.exports = {
     addContact,
     getDataByType,
     revertAddContactSend,
-    approveAddFriend
+    approveAddFriend,
+    deleteAddFriend
     
 }
