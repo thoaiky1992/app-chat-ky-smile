@@ -101,18 +101,36 @@ $(function(){
     $(document).on('click','.delete-friend-list-user',function(){
         let deleteUserId = $(this).attr('data-id');
         let thiss = $(this);
-        $.ajax({
-            url : '/delete-friend-list-user',
-            type : "GET",
-            data : { deleteUserId : deleteUserId},
-            success : function(data){
-                if(data.success){
-                    thiss.parent().parent().remove();
-                    descreaseNumberNotiContact('danh-ba');
-                    socket.emit('delete-friend-of-list-user',deleteUserId);
-                }
-            } 
+        let userName = $(this).parent().parent().find('.c_name').html();
+        
+        Swal.fire({
+            title : "",
+            text: `Bạn chắc chắn muốn hủy bạn bè với ${userName}`,
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            },
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Vâng ! Chắc chắn',
+            cancelButtonText: 'Tôi sẽ suy nghĩ lại'
+        }).then(result => {
+            if(result.value){
+                $.ajax({
+                    url : '/delete-friend-list-user',
+                    type : "GET",
+                    data : { deleteUserId : deleteUserId},
+                    success : function(data){
+                        if(data.success){
+                            thiss.parent().parent().remove();
+                            descreaseNumberNotiContact('danh-ba');
+                            socket.emit('delete-friend-of-list-user',deleteUserId);
+                        }
+                    } 
+                })
+            }
         })
+        
     })
     socket.on('response-delete-friend-of-list-user',function(data){
         descreaseNumberNotiContact('danh-ba');
