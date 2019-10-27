@@ -42,7 +42,7 @@ $(function(){
             </a> 
         </li>`;
         $('.load-more-list-user-contact-received').parent().parent().remove()
-        $('.table-contact-received tbody').append(`
+        $('.table-contact-received tbody').prepend(`
         <tr class="tr-contact-received" data-id="${data.user._id}">
             <td>
                 <img src="assets/images/${data.user.avatar}" style="object-fit: cover;" width="40" height="40" class="rounded-circle avatar" alt="">
@@ -55,10 +55,10 @@ $(function(){
                 <address><i class="zmdi zmdi-pin"></i>${data.user.address}</address>
             </td>
             <td>
-                <button data-id="${data.user._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round add-friend">
+                <button data-id="${data.user._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round approve-add-friend">
                     <i class="zmdi zmdi-plus"></i>
                 </button>
-                <button data-id="${data.user._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round add-friend">
+                <button data-id="${data.user._id}" class="btn btn-default btn-icon btn-simple btn-icon-mini btn-round delete-add-friend">
                     <i class="zmdi zmdi-delete"></i>
                 </button>
             </td>

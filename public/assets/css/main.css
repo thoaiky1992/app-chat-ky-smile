@@ -20709,6 +20709,7 @@ section.content {
 
 .dropdown-menu ul.menu {
   padding-left: 0;
+  overflow: none !important;
 }
 
 .dropdown-menu ul.menu .icon-circle {
@@ -22459,9 +22460,6 @@ img:hover , a:hover {
 }
 .a-notify:hover{
   background: none !important;
-}
-.slimScrollDiv ul{
-  overflow: scroll !important;
 }
 
 
