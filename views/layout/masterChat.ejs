@@ -17,13 +17,12 @@
 <link rel="stylesheet" href="assets/css/chatapp.css">
 <link rel="stylesheet" href="assets/css/color_skins.css">
 <link rel="stylesheet" href="assets/css/main.css">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
 <script src="assets/js/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+
 <style>
 .lds-ripple {
   display: inline-block;
@@ -274,20 +273,25 @@
 
 <!-- currentIdUser -->
 <input type="hidden" id="currentIdUser" value="<%= user._id %>">
-<script>
-    const socket = io();
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
 <script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+<script>
+    const socket = io();
+</script>
 <script src="assets/js/moment.js"></script>
 <script src="assets/js/moment-with-locales.js"></script>
 <script src="assets/js/onAndOffNotify.js"></script>
 <script src="assets/js/updateUser.js"></script>
 <script src="assets/js/searchUserToAddFriend.js"></script>
-<script>
+<script src="emojionearea/dist/emojionearea.min.js"></script>
+<script  type="text/javascript">
 $(document).ready(function(){
+    window.emojioneVersion = "3.0.0";
     $(".list_btn").on('click',function(){
         $("#plist").toggleClass("open");
     });
@@ -295,6 +299,7 @@ $(document).ready(function(){
         $('#modalNewGroup').modal('show');
     })
 })
+
 </script>
 <!-- Alert Errors and Success -->
 <% if(errors != "") { %>
@@ -335,5 +340,4 @@ $(document).ready(function(){
     <% }) %>
 <% } %>
 </body>
-<!-- Mirrored from www.wrraptheme.com/templates/compass/html/chat.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Oct 2019 01:30:58 GMT -->
 </html>
