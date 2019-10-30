@@ -31,20 +31,15 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane slideRight active" id="people">
                                 <ul class="chat-list list-unstyled m-b-0">
-                                    <li class="clearfix">
-                                        <img src="assets/images/xs/avatar1.jpg" alt="avatar" />
-                                        <div class="about">
-                                            <div class="name">Vincent Porter</div>
-                                            <div class="status"> <i class="zmdi zmdi-circle offline"></i> anh nhớ em .. </div>                                            
-                                        </div>
-                                    </li>
-                                    <li class="clearfix active">
-                                        <img class="avt-onl" src="assets/images/xs/avatar2.jpg" alt="avatar" />
-                                        <div class="about">
-                                            <div class="name">Aiden Chavez</div>
-                                            <div class="status"> <i class="zmdi zmdi-circle online"></i> online </div>
-                                        </div>
-                                    </li>
+                                    <% contacts.forEach(user => { %>  
+                                        <li class="clearfix" data-id="<%= user._id %>">
+                                            <img src="assets/images/<%= user.avatar %>" width="45" height="45 alt="avatar" />
+                                            <div class="about">
+                                                <div class="name"><%= user.username %></div>
+                                                <div class="status"> <i class="zmdi zmdi-circle offline"></i> anh nhớ em .. </div>                                            
+                                            </div>
+                                        </li>
+                                    <% }) %> 
                                 </ul>
                             </div>
                         </div>
@@ -108,3 +103,18 @@
         </div>
     </div>
 </section>
+<script>
+$(function(){
+    socket.on('response-approve-add-friend',function(data){
+        $('.chat-list').append(`
+            <li class="clearfix" data-id="${data.userApproveAddFriend._id}">
+                <img src="assets/images/${data.userApproveAddFriend.avatar}" alt="avatar" />
+                <div class="about">
+                    <div class="name">${data.userApproveAddFriend.username}</div>
+                    <div class="status"> <i class="zmdi zmdi-circle online"></i> online </div>
+                </div>
+            </li>
+        `);
+    })
+})
+</script>

@@ -142,6 +142,24 @@ let removeContact = (currentID, contactID) => {
         resolve(true);
     })
 }
+let getContacts = (currentID) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            let contacts = await contactModel.getContacts(currentID,LIMIT);
+            let users = contacts.map( async (contact) => {
+                if(contact.contactID == currentID){
+                    return await userModel.getNormalUserDataById(contact.userID);
+                }
+                else{
+                    return await userModel.getNormalUserDataById(contact.contactID);
+                }
+            });
+            resolve(await Promise.all(users));
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports = {
     addNewContact,
     getListUserContact,
@@ -153,5 +171,6 @@ module.exports = {
     removeRequestContactSent,
     approveRequestContactReceived,
     removeRequestContactReceived,
-    removeContact
+    removeContact,
+    getContacts
 }

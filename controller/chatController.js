@@ -1,6 +1,7 @@
 const userService = require('../service/userService');
 const contactService = require('../service/contactService');
 const notificationService = require('../service/notificationService');
+const messageService = require('../service/messageService');
 const ejs = require('ejs');
 const { promisify } =  require('util');
 // Make ejs function renderFile available with async/await
@@ -8,12 +9,20 @@ const renderFile = promisify(ejs.renderFile).bind(ejs);
 let getChat = async (req,res) => {
     //only 10 item on time
     let notifications = await notificationService.getNotifications(req.user._id);
+    // get contacts (10 item on time)
+    let contacts = await contactService.getContacts(req.user._id);
+
+
+    let letAllConversationItems = await messageService.letAllConversationItems(req.user._id);
+    // all messages with conversations , 30 item
+    let allConversationWithMessage = letAllConversationItems.allConversationWithMessage;
     res.render('chat', { 
         errors : req.flash('errors') , 
         success : req.flash('success'),
         typeLleftSide : "chat",
         user : req.user,
-        notifications : notifications
+        notifications : notifications,
+        contacts : contacts
     });
 }
 let getContact = async (req,res) => {

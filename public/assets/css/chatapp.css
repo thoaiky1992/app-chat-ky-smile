@@ -195,7 +195,9 @@
   .float-right {
     float: right;
   }
-  
+  .clearfix img{
+    object-fit: cover;
+  }
   .clearfix:after {
     visibility: hidden;
     display: block;
