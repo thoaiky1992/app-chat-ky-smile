@@ -102,20 +102,15 @@ $(function(){
         let deleteUserId = $(this).attr('data-id');
         let thiss = $(this);
         let userName = $(this).parent().parent().find('.c_name').html();
-        
         Swal.fire({
-            title : "",
+            title: '',
             text: `Bạn chắc chắn muốn hủy bạn bè với ${userName}`,
-            animation: false,
-            customClass: {
-                popup: 'animated tada'
-            },
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Vâng ! Chắc chắn',
             cancelButtonText: 'Tôi sẽ suy nghĩ lại'
-        }).then(result => {
-            if(result.value){
+            }).then((result) => {
+            if (result.value) {
                 $.ajax({
                     url : '/delete-friend-list-user',
                     type : "GET",

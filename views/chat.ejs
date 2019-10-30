@@ -93,8 +93,8 @@
                             </ul>
                         </div>
                         <div class="chat-message clearfix">
-                            <div class="input-group p-t-15">
-                                <input type="text" class="form-control" placeholder="Enter text here...">
+                            <div class="input-group p-t-15" id="divChat">
+                                <input id="write-chat" type="text" class="form-control" placeholder="Enter text here...">
                                 <span class="input-group-addon">
                                     <i class="zmdi zmdi-mail-send"></i>
                                 </span>
@@ -108,19 +108,3 @@
         </div>
     </div>
 </section>
-
-<script>
-$(function(){
-    socket.on('response-approve-add-friend',function(data){
-        $('.chat-list').append(`
-            <li class="clearfix" data-id="${data.userApproveAddFriend._id}">
-                <img src="assets/images/${data.userApproveAddFriend.avatar}" alt="avatar" />
-                <div class="about">
-                    <div class="name">${data.userApproveAddFriend.username}</div>
-                    <div class="status"> <i class="zmdi zmdi-circle online"></i> online </div>
-                </div>
-            </li>
-        `);
-    })
-})
-</script>
