@@ -1,6 +1,9 @@
 const userModel = require('../model/userModel');
+const contactModel = require('../model/contactModel');
+const messageModel = require('../model/messageModel');
 const LIMIT_CONVERSATIONS = 10;
 const LIMIT_MESSAGES = 10; 
+const _ = require('lodash');
 let letAllConversationItems = (currentUserId) => {
     return new Promise(async (resolve,reject) => {
         try {

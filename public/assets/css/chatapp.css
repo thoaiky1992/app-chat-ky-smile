@@ -237,7 +237,10 @@
       overflow-x: auto;
     }
   }
-  
+  .chat-history{
+    height: 600px;
+    overflow-y: scroll;
+  }
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     .chat-app {
       margin: 0;

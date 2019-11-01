@@ -22,7 +22,8 @@ let getChat = async (req,res) => {
         typeLleftSide : "chat",
         user : req.user,
         notifications : notifications,
-        contacts : contacts
+        contacts : contacts,
+        allConversationWithMessage : allConversationWithMessage
     });
 }
 let getContact = async (req,res) => {
