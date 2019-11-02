@@ -2,6 +2,8 @@ const userService = require('../service/userService');
 const contactService = require('../service/contactService');
 const notificationService = require('../service/notificationService');
 const messageService = require('../service/messageService');
+const convertTimestampToHumanTime = require('../helpers/convertTimestamps');
+const convertTimestampsToDMY = require('../helpers/convertTimestampsToDMY');
 const ejs = require('ejs');
 const { promisify } =  require('util');
 // Make ejs function renderFile available with async/await
@@ -23,7 +25,9 @@ let getChat = async (req,res) => {
         user : req.user,
         notifications : notifications,
         contacts : contacts,
-        allConversationWithMessage : allConversationWithMessage
+        allConversationWithMessage : allConversationWithMessage,
+        convertTimestampToHumanTime: convertTimestampToHumanTime,
+        convertTimestampsToDMY : convertTimestampsToDMY
     });
 }
 let getContact = async (req,res) => {
@@ -152,6 +156,21 @@ let deleteFriendListUser = async (req,res) => {
         return res.status(500).send(error);
     }
 }
+let sendMessageToUser = async (req,res) => {
+    try {
+        let sender = {
+            id : req.user._id,
+            name : req.user.username,
+            avatar : req.user.avatar
+        }
+        let receiverId = req.body.receivedId ; 
+        let messageVal = req.body.message;
+        let  newMessage = await messageService.addNewTextEmoji(sender,receiverId,messageVal);
+        return res.status(200).send({message:newMessage});
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
 module.exports = {
     getChat,
     getContact,
@@ -163,5 +182,6 @@ module.exports = {
     revertAddContactSend,
     approveAddFriend,
     deleteAddFriend,
-    deleteFriendListUser   
+    deleteFriendListUser,
+    sendMessageToUser   
 }

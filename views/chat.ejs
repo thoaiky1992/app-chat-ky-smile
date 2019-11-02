@@ -46,55 +46,73 @@
                     </div>
                     <%  allConversationWithMessage.forEach((conversation,index) => { %> 
                     <div class="chat" data-id="<%= conversation._id %>" 
-                        <% if(index != 1){ %> 
+                        <% if(index != 0){ %> 
                             style="display:none;"
                         <% } %> 
                     >
                         <div class="chat-header clearfix">
                             <img src="assets/images/xs/avatar2.jpg" alt="avatar" />
                             <div class="chat-about"> 
-                                <div class="chat-with"><%= conversation.name %> </div>
-                                <div class="chat-num-messages">already <%= conversation.messageAmount %> messages</div>
+                                <div class="chat-with"><%= conversation.username %> </div>
+                                <div class="chat-num-messages">already <%= conversation.messages.length %> messages</div>
                             </div>
                             <a href="javascript:void(0);" class="list_btn btn btn-primary btn-round float-md-right"><i class="zmdi zmdi-comments"></i></a>
                         </div>
-                        <div class="chat-history">
-                            <ul>
-                                <li class="clearfix"> 
-                                    <div class="message-data text-right"> <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp; <span class="message-data-name" >Michael</span> <i class="zmdi zmdi-circle me"></i> </div>
-                                    <div class="message other-message float-right"> Hi Aiden, </div>
-                                </li>
-                                <li>
-                                    <div class="message-data">
-                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i> Aiden</span> <span class="message-data-time">10:12 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">
-                                        <p>Are we meeting today? Project has been already finished and I have results to show you.</p>
-                                        <div class="row">
-                                            <div class="col-sm-6 col-lg-4 m-t-10"><a href="javascript:void(0);"><img src="assets/images/image2.jpg" alt="" class="img-fluid img-thumbnail"></a> </div>
-                                            <div class="col-sm-6 col-lg-4 m-t-10"><a href="javascript:void(0);"> <img src="assets/images/image3.jpg" alt="" class="img-fluid img-thumbnail"></a> </div>
-                                            <div class="col-sm-6 col-lg-4 m-t-10"><a href="javascript:void(0);"> <img src="assets/images/image4.jpg" alt="" class="img-fluid img-thumbnail"> </a> </div>
-                                        </div>
-                                    </div>
-                                </li>  
-                                <li>
-                                    <div class="message-data">
-                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i> Aiden</span> <span class="message-data-time">10:12 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-12 "><a href="javascript:void(0);"> <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> </a> </div>
-                                        </div>
-                                    </div>
-                                </li>                      
-                                <li>
-                                    <div class="message-data"> <span class="message-data-name"><i class="zmdi zmdi-circle online"></i> Aiden</span> <span class="message-data-time">10:31 AM, Today</span> </div>
-                                    <i class="zmdi zmdi-circle online"></i> <i class="zmdi zmdi-circle online" style="color: #AED2A6"></i> <i class="zmdi zmdi-circle online" style="color:#DAE9DA"></i> </li>
+                        <div class="chat-history" data-id="<%= conversation._id %>" >
+                            <ul data-id="<%= conversation._id %>" >
+                                <% conversation.messages.forEach(function(message){ %>
+                                    <% if(message.messageType === "text"){ %>
+                                        <% if(message.sender.id == user._id){ %>
+                                            <li class="clearfix"> 
+                                                <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
+                                                <div class="message other-message float-right"><%= message.text %></div>
+                                            </li>
+                                        <% }else{ %>
+                                            <li>
+                                                <div class="message-data">
+                                                    <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                                                </div>
+                                                <div class="message my-message"><%= message.text %></div>
+                                            </li>  
+                                        <% } %>
+                                    <% } %>  
+                                    <% if(message.messageType === "image"){ %>
+                                        <% if(message.sender.id == user._id){ %>
+                                            <li class="clearfix"> 
+                                                <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
+                                                <div class="message other-message float-right">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-lg-12 ">
+                                                            <a href="javascript:void(0);">
+                                                                <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
+                                                            </a> 
+                                                        </div>
+                                                    </div>    
+                                                </div>
+                                            </li>
+                                        <% }else{ %>
+                                            <li>
+                                                <div class="message-data">
+                                                    <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                                                </div>
+                                                <div class="message my-message">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-lg-12 ">
+                                                            <a href="javascript:void(0);">
+                                                                <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
+                                                            </a> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>  
+                                        <% } %>
+                                    <% } %> 
+                                <% }) %>
                             </ul>
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group p-t-15" id="divChat">
-                                <input id="write-chat" type="text" class="form-control" placeholder="Enter text here...">
+                                <input data-id="<%= conversation._id %>"  id="write-chat-<%= conversation._id %>" type="text" class="form-control write-chat" placeholder="Enter text here...">
                                 <span class="input-group-addon">
                                     <i class="zmdi zmdi-mail-send"></i>
                                 </span>
@@ -104,16 +122,49 @@
                         </div>
                     </div>
                     <%  }) %> 
-                    
                 </div>
             </div>
         </div>
     </div>
 </section>
 <script>
-$('.chat-history').niceScroll();
 $(function(){
-    
+    $(document).on('keyup','.write-chat',function(e){
+        let receivedId = $(this).attr('data-id');
+        let message = $(this).val();
+        let thiss = $(this);
+        if(message.length != 0){
+            if(e.which == 13){
+                if(!receivedId || !message){
+                    return false;
+                }
+                $.post('/send-massage-to-user',{receivedId:receivedId,message:message},function(data){
+                    if(data.message.messageType == "text"){
+                        $(`.chat-history ul[data-id=${receivedId}]`).append(`
+                            <li class="clearfix"> 
+                                <div class="message-data text-right"> <span class="message-data-time" >${moment(data.message.createdAt).format('DD/MM/YYYY, HH:mm:ss')}</span> &nbsp; &nbsp; <span class="message-data-name" >${data.message.sender.name}</span> <i class="zmdi zmdi-circle me"></i> </div>
+                                <div class="message other-message float-right">${data.message.text}</div>
+                            </li>
+                        `);
+                        thiss.val('');
+                        $(`.chat .chat-history[data-id=${receivedId}]`).scrollTop($(`.chat .chat-history[data-id=${receivedId}]`)[0].scrollHeight - 50);                       
+                        socket.emit('send-massage-to-user',{userId : receivedId , senderId : data.message.sender.id, senderName :data.message.sender.name, message : data.message.text});
+                    }   
+                })
+            }
+        }
+    })
+    socket.on('response-send-massage-to-user',function(data){
+        $(`.chat-history ul[data-id=${data.receivedId}]`).append(`
+        <li>
+            <div class="message-data">
+                <span class="message-data-name"><i class="zmdi zmdi-circle online"></i>${data.receivedName}</span> <span class="message-data-time">${moment(Date.now()).format('DD/MM/YYYY, HH:mm:ss')}</span>
+            </div>
+            <div class="message my-message">${data.message}</div>
+        </li>  
+        `);
+        $(`.chat .chat-history[data-id=${data.receivedId}]`).scrollTop($(`.chat .chat-history[data-id=${data.receivedId}]`)[0].scrollHeight - 50);
+    })
     socket.on('response-approve-add-friend',function(data){
         $('.chat-list').append(`
             <li class="clearfix" data-id="${data.userApproveAddFriend._id}">

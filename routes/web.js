@@ -45,7 +45,7 @@ let initRoutes = (app) => {
     router.get('/approve-add-friend' , AuthController.checkLoggedIn , ChatController.approveAddFriend)
     router.get('/delete-add-friend', AuthController.checkLoggedIn , ChatController.deleteAddFriend );
     router.get('/delete-friend-list-user' ,  AuthController.checkLoggedIn , ChatController.deleteFriendListUser);
-
+    router.post('/send-massage-to-user' ,  AuthController.checkLoggedIn , ChatController.sendMessageToUser);
 
     return app.use('/',router);
 }

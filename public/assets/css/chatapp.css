@@ -1,3 +1,22 @@
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .chat-app .people-list {
     width: 280px;
     position: absolute;
@@ -239,7 +258,10 @@
   }
   .chat-history{
     height: 600px;
-    overflow-y: scroll;
+  }
+  .chat-history{
+    height: 600px;
+    overflow-y: scroll !important;
   }
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     .chat-app {

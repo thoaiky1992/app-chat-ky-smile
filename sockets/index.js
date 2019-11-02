@@ -3,6 +3,7 @@ const revertContactSend = require('./revertContactSend');
 const approveContactSend = require('./approveContactSend');
 const deleteContactSend = require('./deleteContactSend');
 const deleteFriendOfListUser = require('./deleteFriendOfListUser');
+const sendMessageToUser = require('./sendMessageToUser');
 let initSockets = (io) => {
     let clients = {};
     io.on('connection', (socket) => {
@@ -21,7 +22,7 @@ let initSockets = (io) => {
         approveContactSend(io,socket,clients);
         deleteContactSend(io,socket,clients);
         deleteFriendOfListUser(io,socket,clients);
-
+        sendMessageToUser(io,socket,clients);
         socket.on('disconnect',() => {
             // remove socketId when socket disconnected
             clients[socket.request.user._id] = clients[socket.request.user._id].filter(socketId => socketId !== socket.id );
