@@ -64,9 +64,7 @@
     cursor: pointer;
   }
   
-  .people-list .chat-list li.active {
-    background: #efefef;
-  }
+  
   
   .people-list .chat-list li .name {
     font-size: 15px;
@@ -146,11 +144,11 @@
   
   .chat .chat-history .message {
     color: #444;
-    padding: 18px 20px;
+    padding: 8px 20px;
     line-height: 26px;
     font-size: 16px;
     border-radius: 7px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     max-width: 90%;
     position: relative;
     width: fit-content;
@@ -262,6 +260,17 @@
   .chat-history{
     height: 600px;
     overflow-y: scroll !important;
+  }
+  .message-data{
+    font-size: 12px;
+  }
+  
+  .people-list .chat-list li.active {
+    background: #82f1e1c7;
+  }
+  .chat-list li:hover{
+    background: #efefef !important;
+    box-shadow: 0px 0px 10px #0e143a;
   }
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     .chat-app {

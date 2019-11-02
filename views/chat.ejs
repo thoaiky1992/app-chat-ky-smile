@@ -20,115 +20,179 @@
     <div class="container-fluid">
         <div class="row clearfix">           
             <div class="col-lg-12 col-xl-12">
-                <div class="card chat-app">
-                    <div id="plist" class="people-list">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span class="input-group-addon">
-                                <i class="zmdi zmdi-search"></i>
-                            </span>
-                        </div>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane slideRight active" id="people">
-                                <ul class="chat-list list-unstyled m-b-0">
-                                    <% contacts.forEach(user => { %>  
-                                        <li class="clearfix" data-id="<%= user._id %>">
-                                            <img src="assets/images/<%= user.avatar %>" width="45" height="45 alt="avatar" />
-                                            <div class="about">
-                                                <div class="name"><%= user.username %></div>
-                                                <div class="status"> <i class="zmdi zmdi-circle offline"></i> anh nhớ em .. </div>                                            
-                                            </div>
-                                        </li>
-                                    <% }) %> 
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <%  allConversationWithMessage.forEach((conversation,index) => { %> 
-                    <div class="chat" data-id="<%= conversation._id %>" 
-                        <% if(index != 0){ %> 
-                            style="display:none;"
-                        <% } %> 
-                    >
-                        <div class="chat-header clearfix">
-                            <img src="assets/images/xs/avatar2.jpg" alt="avatar" />
-                            <div class="chat-about"> 
-                                <div class="chat-with"><%= conversation.username %> </div>
-                                <div class="chat-num-messages">already <%= conversation.messages.length %> messages</div>
-                            </div>
-                            <a href="javascript:void(0);" class="list_btn btn btn-primary btn-round float-md-right"><i class="zmdi zmdi-comments"></i></a>
-                        </div>
-                        <div class="chat-history" data-id="<%= conversation._id %>" >
-                            <ul data-id="<%= conversation._id %>" >
-                                <% conversation.messages.forEach(function(message){ %>
-                                    <% if(message.messageType === "text"){ %>
-                                        <% if(message.sender.id == user._id){ %>
-                                            <li class="clearfix"> 
-                                                <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
-                                                <div class="message other-message float-right"><%= message.text %></div>
-                                            </li>
-                                        <% }else{ %>
-                                            <li>
-                                                <div class="message-data">
-                                                    <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
-                                                </div>
-                                                <div class="message my-message"><%= message.text %></div>
-                                            </li>  
-                                        <% } %>
-                                    <% } %>  
-                                    <% if(message.messageType === "image"){ %>
-                                        <% if(message.sender.id == user._id){ %>
-                                            <li class="clearfix"> 
-                                                <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
-                                                <div class="message other-message float-right">
-                                                    <div class="row">
-                                                        <div class="col-sm-12 col-lg-12 ">
-                                                            <a href="javascript:void(0);">
-                                                                <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
-                                                            </a> 
-                                                        </div>
-                                                    </div>    
-                                                </div>
-                                            </li>
-                                        <% }else{ %>
-                                            <li>
-                                                <div class="message-data">
-                                                    <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
-                                                </div>
-                                                <div class="message my-message">
-                                                    <div class="row">
-                                                        <div class="col-sm-12 col-lg-12 ">
-                                                            <a href="javascript:void(0);">
-                                                                <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
-                                                            </a> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>  
-                                        <% } %>
-                                    <% } %> 
-                                <% }) %>
-                            </ul>
-                        </div>
-                        <div class="chat-message clearfix">
-                            <div class="input-group p-t-15" id="divChat">
-                                <input data-id="<%= conversation._id %>"  id="write-chat-<%= conversation._id %>" type="text" class="form-control write-chat" placeholder="Enter text here...">
+                <% if(contacts.length == 0){ %>
+                    <div class="card chat-app">
+                        <div id="plist" class="people-list">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-addon">
-                                    <i class="zmdi zmdi-mail-send"></i>
+                                    <i class="zmdi zmdi-search"></i>
                                 </span>
                             </div>
-                            <a href="javascript:void(0);" class="btn btn-raised btn-warning btn-round"><i class="zmdi zmdi-camera"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-raised btn-info btn-round"><i class="zmdi zmdi-file-text"></i></a>                            
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane slideRight active" id="people">
+                                    <ul class="chat-list list-unstyled m-b-0">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat" >
+                            <div class="chat-header clearfix">
+                                <img src="assets/images/xs/avatar2.jpg" style="display:none;" alt="avatar" />
+                                <div class="chat-about"> 
+                                    <div class="chat-with"></div>
+                                    <div class="chat-num-messages" ></div>
+                                </div>
+                                <a href="javascript:void(0);" class="list_btn btn btn-primary btn-round float-md-right"><i class="zmdi zmdi-comments"></i></a>
+                            </div>
+                            <div class="chat-history">
+                                <ul data-id="" >
+                                </ul>
+                            </div>
+                            <div class="chat-message clearfix">
+                                <div class="input-group p-t-15" id="divChat">
+                                </div>                           
+                            </div>
                         </div>
                     </div>
-                    <%  }) %> 
-                </div>
+                <% }else{ %>
+                    <div class="card chat-app">
+                        <div id="plist" class="people-list">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-addon">
+                                    <i class="zmdi zmdi-search"></i>
+                                </span>
+                            </div>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane slideRight active" id="people">
+                                    <ul class="chat-list list-unstyled m-b-0">
+                                        <% contacts.forEach(user => { %>  
+                                            <li class="clearfix userItem" data-id="<%= user._id %>">
+                                                <img src="assets/images/<%= user.avatar %>" width="45" height="45 alt="avatar" />
+                                                <div class="about">
+                                                    <div class="name"><%= user.username %></div>
+                                                    <div class="status"> <i class="zmdi zmdi-circle offline"></i> anh nhớ em .. </div>                                            
+                                                </div>
+                                            </li>
+                                        <% }) %> 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <%  allConversationWithMessage.forEach((conversation,index) => { %> 
+                        <div class="chat" data-id="<%= conversation._id %>" 
+                        <% if(index != 0) { %>  
+                            style="display:none;"
+                        <% } %>   
+                        >
+                            <div class="chat-header clearfix">
+                                <img src="assets/images/xs/avatar2.jpg" alt="avatar" />
+                                <div class="chat-about"> 
+                                    <div class="chat-with"><%= conversation.username %> </div>
+                                    <div class="chat-num-messages" > <span data-id="<%= conversation._id %>"><%= conversation.messages.length %></span>  tin nhắn</div>
+                                </div>
+                                <a href="javascript:void(0);" class="list_btn btn btn-primary btn-round float-md-right"><i class="zmdi zmdi-comments"></i></a>
+                            </div>
+                            <div class="chat-history" data-id="<%= conversation._id %>" >
+                                <ul data-id="<%= conversation._id %>" >
+                                    <% conversation.messages.forEach(function(message){ %>
+                                        <% if(message.messageType === "text"){ %>
+                                            <% if(message.sender.id == user._id){ %>
+                                                <li class="clearfix"> 
+                                                    <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
+                                                    <div class="message other-message float-right"><%= message.text %></div>
+                                                </li>
+                                            <% }else{ %>
+                                                <li>
+                                                    <div class="message-data">
+                                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                                                    </div>
+                                                    <div class="message my-message"><%= message.text %></div>
+                                                </li>  
+                                            <% } %>
+                                        <% } %>  
+                                        <% if(message.messageType === "image"){ %>
+                                            <% if(message.sender.id == user._id){ %>
+                                                <li class="clearfix"> 
+                                                    <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
+                                                    <div class="message other-message float-right">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-lg-12 ">
+                                                                <a href="javascript:void(0);">
+                                                                    <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
+                                                                </a> 
+                                                            </div>
+                                                        </div>    
+                                                    </div>
+                                                </li>
+                                            <% }else{ %>
+                                                <li>
+                                                    <div class="message-data">
+                                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                                                    </div>
+                                                    <div class="message my-message">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-lg-12 ">
+                                                                <a href="javascript:void(0);">
+                                                                    <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
+                                                                </a> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>  
+                                            <% } %>
+                                        <% } %> 
+                                    <% }) %>
+                                </ul>
+                            </div>
+                            <div class="chat-message clearfix">
+                                <div class="input-group p-t-15" id="divChat">
+                                    <input data-id="<%= conversation._id %>"  id="write-chat-<%= conversation._id %>" type="text" class="form-control write-chat" placeholder="Enter text here...">
+                                    <span class="input-group-addon">
+                                        <i class="zmdi zmdi-camera" style="margin-right: 10px;"></i>
+                                        <i class="zmdi zmdi-mail-send"></i>
+                                    </span>
+                                </div>                          
+                            </div>
+                            <div id="divEmojionearea_<%= conversation._id %>" ></div>
+                        </div>
+                        <%  }) %> 
+                    </div>
+                <%  } %>
             </div>
         </div>
     </div>
 </section>
+
 <script>
 $(function(){
+    let existChatList = $('.chatList')
+    let chatList = +($('.chatList li').length);
+    if(chatList > 0){
+        $('.chatList li:first').click();
+    }
+    else{
+        Swal.fire({
+            type: 'warning',
+            title: 'Sẵn sàng tìm kiếm bạn bè mới nhé !!!',
+        })
+        .then(function(){
+            location.href = "/contact";
+        })
+    }
+    $(document).on('click','.userItem',function(){
+        let idUser = $(this).attr('data-id');
+        $('.userItem').removeClass('active');
+        $(this).addClass('active');
+        $('.chat').css({'display':'none'});
+        $(`.chat[data-id=${idUser}]`).css({'display':'block'});
+
+    })
+    $(document).on('click','.iconChat',function(){
+        console.log($(this).attr('data-id'))
+        $('.emojionearea-button-open').click();
+    })
     $(document).on('keyup','.write-chat',function(e){
         let receivedId = $(this).attr('data-id');
         let message = $(this).val();
@@ -147,7 +211,10 @@ $(function(){
                             </li>
                         `);
                         thiss.val('');
-                        $(`.chat .chat-history[data-id=${receivedId}]`).scrollTop($(`.chat .chat-history[data-id=${receivedId}]`)[0].scrollHeight - 50);                       
+                        $(`.chat .chat-history[data-id=${receivedId}]`).scrollTop($(`.chat .chat-history[data-id=${receivedId}]`)[0].scrollHeight - 50);     
+                        let totalMessage = +($(`.chat-num-messages span[data-id=${receivedId}]`).html());
+                        totalMessage++;
+                        $(`.chat-num-messages span[data-id=${receivedId}]`).html(totalMessage)    
                         socket.emit('send-massage-to-user',{userId : receivedId , senderId : data.message.sender.id, senderName :data.message.sender.name, message : data.message.text});
                     }   
                 })
@@ -163,6 +230,9 @@ $(function(){
             <div class="message my-message">${data.message}</div>
         </li>  
         `);
+        let totalMessage = +($(`.chat-num-messages span[data-id=${data.receivedId}]`).html());
+        totalMessage++;
+        $(`.chat-num-messages span[data-id=${data.receivedId}]`).html(totalMessage)
         $(`.chat .chat-history[data-id=${data.receivedId}]`).scrollTop($(`.chat .chat-history[data-id=${data.receivedId}]`)[0].scrollHeight - 50);
     })
     socket.on('response-approve-add-friend',function(data){
