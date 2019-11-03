@@ -76,7 +76,40 @@ let addNewTextEmoji = (sender,receiverId,messageVal) => {
         }
     })
 }
+let addNewImage = (sender,receiverId,fileName) => {
+    return new Promise( async (resolve,reject) => {
+        try {
+            let getUserReceiver = await userModel.getNormalUserDataById(receiverId);
+            if(!getUserReceiver){
+                return reject(transErrors.conversation_not_found);
+            }
+            let receiver = {
+                id : getUserReceiver._id,
+                name : getUserReceiver.username,
+                avatar : getUserReceiver.avatar
+            }
+            let newMessageItem = {
+                senderId    : sender.id,
+                receiverId  : receiver.id,
+                conversationType : messageModel.conversationTypes.PERSONAL,
+                messageType : messageModel.messageType.IMAGE,
+                sender : sender,
+                receiver : receiver,
+                fileName : fileName,
+                createdAt : Date.now(),
+            }
+            // create new message
+            let newMessage = await messageModel.model.createNew(newMessageItem);
+            // update contact
+            await contactModel.updateWhenHasNewMessage(sender.id,getUserReceiver._id)
+            resolve(newMessage);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports = {
     letAllConversationItems,
-    addNewTextEmoji
+    addNewTextEmoji,
+    addNewImage
 }

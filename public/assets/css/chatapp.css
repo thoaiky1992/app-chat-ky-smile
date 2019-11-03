@@ -272,6 +272,10 @@
     background: #efefef !important;
     box-shadow: 0px 0px 10px #0e143a;
   }
+  .image-chat{
+    max-height: 200px;
+    object-fit: cover;
+  }
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     .chat-app {
       margin: 0;

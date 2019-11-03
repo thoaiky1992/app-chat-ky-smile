@@ -15,7 +15,7 @@ let initSockets = (io) => {
         for(let i = 0 ; i < clients.length ; i++){
             clients[i] = _.uniqBy(clients[i]); // loại bỏ các socket.id trùng
         }
-
+        io.emit('response-online',clients);
         //socket on
         addNewContact(io,socket,clients);
         revertContactSend(io,socket,clients);
@@ -29,6 +29,7 @@ let initSockets = (io) => {
             if(!clients[socket.request.user._id].length){
                 delete clients[socket.request.user._id];
             }
+            io.emit('response-offline',socket.request.user._id);
         });
     })
 }

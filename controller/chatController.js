@@ -4,10 +4,50 @@ const notificationService = require('../service/notificationService');
 const messageService = require('../service/messageService');
 const convertTimestampToHumanTime = require('../helpers/convertTimestamps');
 const convertTimestampsToDMY = require('../helpers/convertTimestampsToDMY');
+const multer = require('multer');
+const uuidv4 = require('uuid/v4');
 const ejs = require('ejs');
 const { promisify } =  require('util');
 // Make ejs function renderFile available with async/await
 const renderFile = promisify(ejs.renderFile).bind(ejs);
+
+
+// send image to user chat
+let StorageAvatar = multer.diskStorage({
+    destination : (req,file,callback) => {
+        callback(null,"public/assets/images");
+    },
+    filename : (req,file,callback) => {
+        let avatarName = `${Date.now()}-${uuidv4()}-${file.originalname}`;
+        callback(null,avatarName);
+    }
+})
+let imageUploadFile = multer({
+    storage : StorageAvatar,
+}).single("my-image-chat");
+let sendImageToUser = (req,res) => {
+    imageUploadFile(req,res, async (error) => {
+        if(error){
+            if(error.message){
+                return res.status(500).send(transErrors.image_message_size);
+            }
+            return res.status(500).send(error);
+        }
+        try {
+            let sender = {
+                id : req.user._id,
+                name : req.user.username,
+                avatar : req.user.avatar
+            }
+            let receiverId = req.body.userId; 
+            let fileName = req.file.filename;
+            let newMessage = await messageService.addNewImage(sender,receiverId,fileName);
+            return res.status(200).send({message:newMessage});
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+}
 let getChat = async (req,res) => {
     //only 10 item on time
     let notifications = await notificationService.getNotifications(req.user._id);
@@ -183,5 +223,6 @@ module.exports = {
     approveAddFriend,
     deleteAddFriend,
     deleteFriendListUser,
-    sendMessageToUser   
+    sendMessageToUser,
+    sendImageToUser   
 }

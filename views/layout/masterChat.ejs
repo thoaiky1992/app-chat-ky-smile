@@ -21,9 +21,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
 <script src="assets/js/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
 <style>
 .lds-ripple {
@@ -31,6 +28,9 @@
   position: relative;
   width: 50px;
   height: 50px;
+}
+.swal-footer {
+  text-align: center;
 }
 .lds-ripple div {
   position: absolute;
@@ -177,16 +177,43 @@
 <script src="assets/js/onAndOffNotify.js"></script>
 <script src="assets/js/updateUser.js"></script>
 <script src="assets/js/searchUserToAddFriend.js"></script>
-
 <script  type="text/javascript">
 $(document).ready(function(){
-    
+    let existChatList = $('.list-user-chat')
+    let chatList = +($('.list-user-chat li').length);
+    if(chatList > 0 && location.pathname == "/chat"){
+        $('.list-user-chat li:first').click();
+    }
+    if(chatList == 0 && location.pathname == "/chat"){
+        Swal.fire({
+            type : "info",
+            title: 'Sẵn sàng tìm kiếm bạn bè mới nhé !!!',
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            }
+        })
+        .then(function(){
+            location.href = "/contact";
+        })
+    }
     $(".list_btn").on('click',function(){
         $("#plist").toggleClass("open");
     });
     $('.btnNewGroup').on('click',function(){
         $('#modalNewGroup').modal('show');
     })
+    socket.on('response-online',function(data){
+        Object.keys(data).forEach(function(key){
+            $(`.userItem[data-id=${key}]`).find('.zmdi-circle').removeClass('offline').addClass('online');
+            $(`.userItem[data-id=${key}]`).find('img').addClass('avt-onl');
+        })
+    })
+    socket.on('response-offline',function(data){
+        $(`.userItem[data-id=${data}]`).find('.zmdi-circle').removeClass('online');
+        $(`.userItem[data-id=${data}]`).find('img').removeClass('avt-onl');
+    })
+    
 })
 
 </script>

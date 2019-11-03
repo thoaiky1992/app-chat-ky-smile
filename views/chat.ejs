@@ -66,13 +66,13 @@
                             </div>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane slideRight active" id="people">
-                                    <ul class="chat-list list-unstyled m-b-0">
+                                    <ul class="chat-list list-unstyled m-b-0 list-user-chat">
                                         <% contacts.forEach(user => { %>  
                                             <li class="clearfix userItem" data-id="<%= user._id %>">
                                                 <img src="assets/images/<%= user.avatar %>" width="45" height="45 alt="avatar" />
                                                 <div class="about">
                                                     <div class="name"><%= user.username %></div>
-                                                    <div class="status"> <i class="zmdi zmdi-circle offline"></i> anh nhớ em .. </div>                                            
+                                                    <div class="status"> <i class="zmdi zmdi-circle"></i> anh nhớ em .. </div>                                            
                                                 </div>
                                             </li>
                                         <% }) %> 
@@ -95,7 +95,7 @@
                                 <a href="javascript:void(0);" class="list_btn btn btn-primary btn-round float-md-right"><i class="zmdi zmdi-comments"></i></a>
                             </div>
                             <div class="chat-history" data-id="<%= conversation._id %>" >
-                                <ul data-id="<%= conversation._id %>" >
+                                <ul data-id="<%= conversation._id %>" class="ulScrollChat">
                                     <% conversation.messages.forEach(function(message){ %>
                                         <% if(message.messageType === "text"){ %>
                                             <% if(message.sender.id == user._id){ %>
@@ -116,11 +116,11 @@
                                             <% if(message.sender.id == user._id){ %>
                                                 <li class="clearfix"> 
                                                     <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
-                                                    <div class="message other-message float-right">
+                                                    <div class="message  float-right">
                                                         <div class="row">
                                                             <div class="col-sm-12 col-lg-12 ">
                                                                 <a href="javascript:void(0);">
-                                                                    <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
+                                                                    <img src="assets/images/<%= message.fileName %>" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
                                                                 </a> 
                                                             </div>
                                                         </div>    
@@ -135,7 +135,7 @@
                                                         <div class="row">
                                                             <div class="col-sm-12 col-lg-12 ">
                                                                 <a href="javascript:void(0);">
-                                                                    <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="img-fluid img-thumbnail"> 
+                                                                    <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
                                                                 </a> 
                                                             </div>
                                                         </div>
@@ -147,11 +147,13 @@
                                 </ul>
                             </div>
                             <div class="chat-message clearfix">
+                                <input class="file-image-chat" data-id="<%= conversation._id %>" type="file" id="file-image-<%= conversation._id %>" style="display:none;">
                                 <div class="input-group p-t-15" id="divChat">
+                                    
                                     <input data-id="<%= conversation._id %>"  id="write-chat-<%= conversation._id %>" type="text" class="form-control write-chat" placeholder="Enter text here...">
                                     <span class="input-group-addon">
-                                        <i class="zmdi zmdi-camera" style="margin-right: 10px;"></i>
-                                        <i class="zmdi zmdi-mail-send"></i>
+                                        <i class="zmdi zmdi-camera sendImage" style="margin-right: 10px;cursor: pointer;" data-id="<%= conversation._id %>"></i>
+                                        <i class="zmdi zmdi-mail-send" data-id="<%= conversation._id %>"></i>
                                     </span>
                                 </div>                          
                             </div>
@@ -167,20 +169,50 @@
 
 <script>
 $(function(){
-    let existChatList = $('.chatList')
-    let chatList = +($('.chatList li').length);
-    if(chatList > 0){
-        $('.chatList li:first').click();
-    }
-    else{
-        Swal.fire({
-            type: 'warning',
-            title: 'Sẵn sàng tìm kiếm bạn bè mới nhé !!!',
-        })
-        .then(function(){
-            location.href = "/contact";
-        })
-    }
+    $('.chat-history').on('scroll',function(){
+        let userId = $(this).attr('data-id');
+        let skip = $(this).find('.clearfix').length;
+        console.log(skip)
+    })
+    $(document).on('change','.file-image-chat',function(){
+        let file = $(this).prop('files')[0];
+        let userId = $(this).attr('data-id');
+        let formData = new FormData();
+        formData.append('my-image-chat',file);
+        formData.append('userId',userId);
+        $.ajax({
+            url : '/send-image-to-user',
+            type : 'post',
+            cache : false,
+            contentType : false,
+            processData : false,
+            data : formData,
+            success:function(data){
+                $(`.chat-history ul[data-id=${userId}]`).append(`
+                <li class="clearfix"> 
+                    <div class="message-data text-right"> <span class="message-data-time" >${moment().format('DD/MM/YYYY, HH:mm:ss')}</span> &nbsp; &nbsp; <span class="message-data-name" >${data.message.sender.name}</span> <i class="zmdi zmdi-circle me"></i> </div>
+                    <div class="message  float-right">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 ">
+                                <a href="javascript:void(0);">
+                                    <img src="assets/images/${data.message.fileName}" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
+                                </a> 
+                            </div>
+                        </div>    
+                    </div>
+                </li>
+                `);
+                setTimeout(() => {
+                    let heightScrollChat = parseInt($(`.chat .chat-history[data-id=${userId}]`)[0].scrollHeight);
+                    $(`.chat .chat-history[data-id=${userId}]`).scrollTop(heightScrollChat);
+                }, 100); 
+            }
+        });
+    });
+    $(document).on('click','.sendImage',function(){
+        let userId = $(this).attr('data-id');
+        $(`#file-image-${userId}`).trigger('click');
+    })
     $(document).on('click','.userItem',function(){
         let idUser = $(this).attr('data-id');
         $('.userItem').removeClass('active');
@@ -188,10 +220,6 @@ $(function(){
         $('.chat').css({'display':'none'});
         $(`.chat[data-id=${idUser}]`).css({'display':'block'});
 
-    })
-    $(document).on('click','.iconChat',function(){
-        console.log($(this).attr('data-id'))
-        $('.emojionearea-button-open').click();
     })
     $(document).on('keyup','.write-chat',function(e){
         let receivedId = $(this).attr('data-id');
