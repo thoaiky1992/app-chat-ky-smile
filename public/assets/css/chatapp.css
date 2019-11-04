@@ -5,12 +5,12 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: white; 
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #8ae1eceb; 
 }
 
 /* Handle on hover */
@@ -223,7 +223,10 @@
     clear: both;
     height: 0;
   }
-  
+  .list-user-chat{
+    max-height: 700px;
+    overflow-y: scroll;
+  }
   @media only screen and (max-width: 767px) {
     .chat-app {
       margin: 0;

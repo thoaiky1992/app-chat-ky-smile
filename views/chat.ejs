@@ -66,13 +66,13 @@
                             </div>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane slideRight active" id="people">
-                                    <ul class="chat-list list-unstyled m-b-0 list-user-chat">
+                                    <ul class="chat-list list-unstyled m-b-0 list-user-chat" data-id="<%= user._id%>">
                                         <% contacts.forEach(user => { %>  
                                             <li class="clearfix userItem" data-id="<%= user._id %>">
                                                 <img src="assets/images/<%= user.avatar %>" width="45" height="45 alt="avatar" />
                                                 <div class="about">
                                                     <div class="name"><%= user.username %></div>
-                                                    <div class="status"> <i class="zmdi zmdi-circle"></i> anh nhớ em .. </div>                                            
+                                                    <div class="status"> <i class="zmdi zmdi-circle"></i> <span>Offline</span></div>                                            
                                                 </div>
                                             </li>
                                         <% }) %> 
@@ -96,6 +96,9 @@
                             </div>
                             <div class="chat-history" data-id="<%= conversation._id %>" >
                                 <ul data-id="<%= conversation._id %>" class="ulScrollChat">
+                                    <li  class="clearfix text-center" style="display: none;">
+                                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                                    </li>
                                     <% conversation.messages.forEach(function(message){ %>
                                         <% if(message.messageType === "text"){ %>
                                             <% if(message.sender.id == user._id){ %>
@@ -106,7 +109,7 @@
                                             <% }else{ %>
                                                 <li>
                                                     <div class="message-data">
-                                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.sender.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
                                                     </div>
                                                     <div class="message my-message"><%= message.text %></div>
                                                 </li>  
@@ -129,13 +132,13 @@
                                             <% }else{ %>
                                                 <li>
                                                     <div class="message-data">
-                                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                                                        <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.sender.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
                                                     </div>
                                                     <div class="message my-message">
                                                         <div class="row">
                                                             <div class="col-sm-12 col-lg-12 ">
                                                                 <a href="javascript:void(0);">
-                                                                    <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
+                                                                    <img src="assets/images/<%= message.fileName %>" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
                                                                 </a> 
                                                             </div>
                                                         </div>
@@ -171,8 +174,36 @@
 $(function(){
     $('.chat-history').on('scroll',function(){
         let userId = $(this).attr('data-id');
-        let skip = $(this).find('.clearfix').length;
-        console.log(skip)
+        let skip = +($(this).find('li').length);
+        skip--;
+        let thiss = $(this);
+        let beforeScrollHeight = $(this)[0].scrollHeight;
+        if($(this).scrollTop() == 0){
+            $(this).find('li:first').css({'display':'block'});
+            setTimeout(() => {
+                $.ajax({
+                url : '/load-more-message',
+                type : "GET",
+                data : {userId:userId,skip:skip},
+                success :  function (data){
+                    thiss.find('li:first').css({'display':'none'});
+                    if(data != ""){
+                        thiss.find('li:first').remove();
+                        thiss.prepend(data);
+                        thiss.prepend(`
+                        <li  class="clearfix text-center" style="display: none;">
+                            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                        </li>`);
+                        thiss.scrollTop(thiss[0].scrollHeight - beforeScrollHeight);
+                    }
+                    else{
+                        alertify.notify('Đã load hết tất cả các tin nhắn !!!' , "success" ,7);
+                    }
+                }
+                })
+            }, 1000);
+        }
+        
     })
     $(document).on('change','.file-image-chat',function(){
         let file = $(this).prop('files')[0];
@@ -205,9 +236,32 @@ $(function(){
                 setTimeout(() => {
                     let heightScrollChat = parseInt($(`.chat .chat-history[data-id=${userId}]`)[0].scrollHeight);
                     $(`.chat .chat-history[data-id=${userId}]`).scrollTop(heightScrollChat);
-                }, 100); 
+                }, 100);
+                socket.emit('send-image-to-user',{userId:userId,data:data}); 
             }
         });
+    });
+    socket.on('response-send-image-to-user',function(data){moment().format('DD/MM/YYYY, HH:mm:ss')
+        $(`.chat-history ul[data-id=${data.file.message.sender.id}]`).append(`
+        <li>
+            <div class="message-data">
+                <span class="message-data-name"><i class="zmdi zmdi-circle online"></i>${data.file.message.sender.name}</span> <span class="message-data-time">${moment().format('DD/MM/YYYY, HH:mm:ss')}</span>
+            </div>
+            <div class="message my-message">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 ">
+                        <a href="javascript:void(0);">
+                            <img src="assets/images/${data.file.message.fileName}" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
+                        </a> 
+                    </div>
+                </div>
+            </div>
+        </li>  
+        `);
+        setTimeout(() => {
+            let heightScrollChat = parseInt($(`.chat .chat-history[data-id=${data.file.message.sender.id}]`)[0].scrollHeight);
+            $(`.chat .chat-history[data-id=${data.file.message.sender.id}]`).scrollTop(heightScrollChat);
+        }, 100);
     });
     $(document).on('click','.sendImage',function(){
         let userId = $(this).attr('data-id');
@@ -219,7 +273,7 @@ $(function(){
         $(this).addClass('active');
         $('.chat').css({'display':'none'});
         $(`.chat[data-id=${idUser}]`).css({'display':'block'});
-
+        $(`.chat .chat-history[data-id=${idUser}]`).scrollTop($(`.chat .chat-history[data-id=${idUser}]`)[0].scrollHeight);
     })
     $(document).on('keyup','.write-chat',function(e){
         let receivedId = $(this).attr('data-id');

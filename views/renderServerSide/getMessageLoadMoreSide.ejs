@@ -1,0 +1,48 @@
+<% loadMoreMessage.forEach(function(message){ %>
+    <% if(message.messageType === "text"){ %>
+        <% if(message.sender.id == user._id){ %>
+            <li class="clearfix"> 
+                <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
+                <div class="message other-message float-right"><%= message.text %></div>
+            </li>
+        <% }else{ %>
+            <li>
+                <div class="message-data">
+                    <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                </div>
+                <div class="message my-message"><%= message.text %></div>
+            </li>  
+        <% } %>
+    <% } %>  
+    <% if(message.messageType === "image"){ %>
+        <% if(message.sender.id == user._id){ %>
+            <li class="clearfix"> 
+                <div class="message-data text-right"> <span class="message-data-time" ><%= convertTimestampsToDMY(message.createdAt) %></span> &nbsp; &nbsp; <span class="message-data-name" ><%= message.sender.name %></span> <i class="zmdi zmdi-circle me"></i> </div>
+                <div class="message  float-right">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 ">
+                            <a href="javascript:void(0);">
+                                <img src="assets/images/<%= message.fileName %>" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
+                            </a> 
+                        </div>
+                    </div>    
+                </div>
+            </li>
+        <% }else{ %>
+            <li>
+                <div class="message-data">
+                    <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.receiver.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
+                </div>
+                <div class="message my-message">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 ">
+                            <a href="javascript:void(0);">
+                                <img src="assets/images/image4.jpg" width="300" height="200" alt="" class="image-chat img-fluid img-thumbnail"> 
+                            </a> 
+                        </div>
+                    </div>
+                </div>
+            </li>  
+        <% } %>
+    <% } %> 
+<% }) %>

@@ -108,8 +108,20 @@ let addNewImage = (sender,receiverId,fileName) => {
         }
     })
 }
+let loadMoreMessage = (currentUserId,targetId,skipMessage) => {
+    return new Promise(async (resolve,reject) => {
+        try {
+            let getMessages = await  messageModel.model.readMoreMessageInPersonal(currentUserId,targetId,skipMessage,LIMIT_MESSAGES);
+            getMessages = _.reverse(getMessages);
+            return resolve(getMessages);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports = {
     letAllConversationItems,
     addNewTextEmoji,
-    addNewImage
+    addNewImage,
+    loadMoreMessage
 }

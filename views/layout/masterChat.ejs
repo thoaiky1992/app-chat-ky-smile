@@ -17,12 +17,16 @@
 <link rel="stylesheet" href="assets/css/chatapp.css">
 <link rel="stylesheet" href="assets/css/color_skins.css">
 <link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="alertifyjs/build/css/alertify.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
 <script src="assets/js/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js"></script>
 <style>
+.alertify-notifier .ajs-message.ajs-success{
+    color : white;
+}
 .lds-ripple {
   display: inline-block;
   position: relative;
@@ -57,6 +61,64 @@
     height: 58px;
     opacity: 0;
   }
+}
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #cef;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+li {
+    list-style: none;
 }
 </style>
 </head>
@@ -165,6 +227,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script src="alertifyjs/build/alertify.min.js"></script>
 <script src="assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
 <script src="assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
@@ -205,13 +268,29 @@ $(document).ready(function(){
     })
     socket.on('response-online',function(data){
         Object.keys(data).forEach(function(key){
+            
             $(`.userItem[data-id=${key}]`).find('.zmdi-circle').removeClass('offline').addClass('online');
             $(`.userItem[data-id=${key}]`).find('img').addClass('avt-onl');
+            $(`.userItem[data-id=${key}]`).find('.status span').html(' Online');
+            if($(`.userItem[data-id=${key}]`).length){
+                let html = $(`.userItem[data-id=${key}]`)[0].outerHTML;
+                console.log(html)
+                $(`.userItem[data-id=${key}]`).remove();
+                let currentUserId = "<%= user._id %>";
+                console.log(currentUserId)
+                $(`.list-user-chat[data-id=${currentUserId}]`).prepend(html);
+            }  
         })
     })
     socket.on('response-offline',function(data){
         $(`.userItem[data-id=${data}]`).find('.zmdi-circle').removeClass('online');
         $(`.userItem[data-id=${data}]`).find('img').removeClass('avt-onl');
+        $(`.userItem[data-id=${data}]`).find('.status span').html(' Offline');
+    })
+    socket.on('response-notify-online',function(data){
+        if($(`.userItem[data-id=${data._id}]`)){
+            alertify.notify(`${data.username} vừa mới online !!!` , "success" , 7);
+        }
     })
     
 })

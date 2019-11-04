@@ -4,6 +4,7 @@ const approveContactSend = require('./approveContactSend');
 const deleteContactSend = require('./deleteContactSend');
 const deleteFriendOfListUser = require('./deleteFriendOfListUser');
 const sendMessageToUser = require('./sendMessageToUser');
+const sendImageToUser = require('./sendImageToUser');
 let initSockets = (io) => {
     let clients = {};
     io.on('connection', (socket) => {
@@ -16,6 +17,7 @@ let initSockets = (io) => {
             clients[i] = _.uniqBy(clients[i]); // loại bỏ các socket.id trùng
         }
         io.emit('response-online',clients);
+        socket.broadcast.emit('response-notify-online',socket.request.user);
         //socket on
         addNewContact(io,socket,clients);
         revertContactSend(io,socket,clients);
@@ -23,6 +25,7 @@ let initSockets = (io) => {
         deleteContactSend(io,socket,clients);
         deleteFriendOfListUser(io,socket,clients);
         sendMessageToUser(io,socket,clients);
+        sendImageToUser(io,socket,clients);
         socket.on('disconnect',() => {
             // remove socketId when socket disconnected
             clients[socket.request.user._id] = clients[socket.request.user._id].filter(socketId => socketId !== socket.id );

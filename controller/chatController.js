@@ -211,6 +211,21 @@ let sendMessageToUser = async (req,res) => {
         res.status(500).send(error);
     }
 }
+let loadMoreMessage = async(req,res) => {
+    try {
+        let userId = req.query.userId;
+        let skip = +(req.query.skip);
+        let loadMoreMessage = await messageService.loadMoreMessage(req.user._id,userId,skip);
+        let getMessageLoadMoreSide = await renderFile('views/renderServerSide/getMessageLoadMoreSide.ejs',{
+            loadMoreMessage : loadMoreMessage,
+            convertTimestampsToDMY : convertTimestampsToDMY,
+            user : req.user
+        })
+        res.status(200).send(getMessageLoadMoreSide);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
 module.exports = {
     getChat,
     getContact,
@@ -224,5 +239,6 @@ module.exports = {
     deleteAddFriend,
     deleteFriendListUser,
     sendMessageToUser,
-    sendImageToUser   
+    sendImageToUser,
+    loadMoreMessage   
 }

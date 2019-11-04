@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "alertifyjs": "^1.12.0",
     "bcrypt": "^3.0.6",
     "bluebird": "^3.7.1",
     "body-parser": "^1.19.0",
