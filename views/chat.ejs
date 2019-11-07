@@ -134,7 +134,7 @@
                                                     <div class="message-data">
                                                         <span class="message-data-name"><i class="zmdi zmdi-circle online"></i><%= message.sender.name %></span> <span class="message-data-time"><%= convertTimestampsToDMY(message.createdAt) %></span>
                                                     </div>
-                                                    <div class="message my-message">
+                                                    <div class="message my-message" style="background: none;">
                                                         <div class="row">
                                                             <div class="col-sm-12 col-lg-12 ">
                                                                 <a href="javascript:void(0);">
@@ -247,7 +247,7 @@ $(function(){
             <div class="message-data">
                 <span class="message-data-name"><i class="zmdi zmdi-circle online"></i>${data.file.message.sender.name}</span> <span class="message-data-time">${moment().format('DD/MM/YYYY, HH:mm:ss')}</span>
             </div>
-            <div class="message my-message">
+            <div class="message my-message" style="background: none;">
                 <div class="row">
                     <div class="col-sm-12 col-lg-12 ">
                         <a href="javascript:void(0);">
